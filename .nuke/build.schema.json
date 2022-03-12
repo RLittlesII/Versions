@@ -6,9 +6,13 @@
     "build": {
       "type": "object",
       "properties": {
+        "Artifacts": {
+          "type": "string",
+          "description": "The directory where artifacts are to be dropped"
+        },
         "Configuration": {
           "type": "string",
-          "description": "Configuration to build - Default is 'Debug' (local) or 'Release' (server)",
+          "description": "Configuration to build",
           "enum": [
             "Debug",
             "Release"
@@ -17,6 +21,10 @@
         "Continue": {
           "type": "boolean",
           "description": "Indicates to continue a previously failed build attempt"
+        },
+        "Coverage": {
+          "type": "string",
+          "description": "The directory where coverage artifacts are to be dropped"
         },
         "Help": {
           "type": "boolean",
@@ -71,9 +79,18 @@
           "items": {
             "type": "string",
             "enum": [
+              "Boots",
+              "Build",
+              "BuildiPhone",
+              "BuildVersion",
               "Clean",
-              "Compile",
-              "Restore"
+              "Default",
+              "ModifyInfoPlist",
+              "Pack",
+              "PackiPhone",
+              "Restore",
+              "Test",
+              "XamariniOS"
             ]
           }
         },
@@ -87,9 +104,18 @@
           "items": {
             "type": "string",
             "enum": [
+              "Boots",
+              "Build",
+              "BuildiPhone",
+              "BuildVersion",
               "Clean",
-              "Compile",
-              "Restore"
+              "Default",
+              "ModifyInfoPlist",
+              "Pack",
+              "PackiPhone",
+              "Restore",
+              "Test",
+              "XamariniOS"
             ]
           }
         },

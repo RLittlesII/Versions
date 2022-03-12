@@ -8,8 +8,8 @@
         <Nullable>enable</Nullable>
         <EnableNETAnalyzers>true</EnableNETAnalyzers>
         <NukeTelemetryVersion>1</NukeTelemetryVersion>
-        <ImplicitUsings>disable</ImplicitUsings>
-        <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
+        <!-- <ImplicitUsings>disable</ImplicitUsings>
+        <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports> -->
     </PropertyGroup>
     <ItemGroup>
         <None
