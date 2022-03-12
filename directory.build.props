@@ -1,0 +1,32 @@
+<Project>
+    <PropertyGroup>
+        <Company>rlittlesii</Company>
+        <Copyright>Copyright Rodney Littles, II © $([System.DateTime]::Now.ToString('yyyy'))</Copyright>
+        <LangVersion>9.0</LangVersion>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+        <Features>strict</Features>
+        <Nullable>enable</Nullable>
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
+        <NukeTelemetryVersion>1</NukeTelemetryVersion>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
+    </PropertyGroup>
+    <ItemGroup>
+        <None
+            Include="$(MSBuildThisFileDirectory)/.nuke/temp/packageicon.png"
+            Condition="Exists('$(MSBuildThisFileDirectory)/.nuke/temp/packageicon.png')"
+            Pack="true"
+            PackagePath="/images/"
+            Visible="false"
+        />
+        <None Include="$(MSBuildThisFileDirectory)/LICENSE" Pack="true" PackagePath="/" Visible="false" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectCapability Include="DynamicDependentFile" />
+        <ProjectCapability Include="DynamicFileNesting" />
+    </ItemGroup>
+    <!-- <ItemGroup>
+        <Using Include="JetBrains.Annotations" />
+        <Using Include="System.Diagnostics.CodeAnalysis" />
+    </ItemGroup> -->
+</Project>

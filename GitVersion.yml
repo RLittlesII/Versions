@@ -1,0 +1,15 @@
+assembly-versioning-scheme: MajorMinorPatchTag
+continuous-delivery-fallback-tag: alpha
+commit-message-incrementing: Enabled
+mode: Mainline
+branches:
+  master:
+    mode: ContinuousDelivery
+    tag: ''
+    increment: Minor
+    prevent-increment-of-merged-branch-version: true
+    track-merge-target: false
+    tracks-release-branches: false
+    is-release-branch: false
+ignore:
+  sha: []

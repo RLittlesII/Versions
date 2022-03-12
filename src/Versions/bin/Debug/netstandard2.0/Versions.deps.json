@@ -1,0 +1,154 @@
+{
+  "runtimeTarget": {
+    "name": ".NETStandard,Version=v2.0/",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETStandard,Version=v2.0": {},
+    ".NETStandard,Version=v2.0/": {
+      "Versions/1.0.0": {
+        "dependencies": {
+          "Microsoft.NETFramework.ReferenceAssemblies": "1.0.2",
+          "Microsoft.SourceLink.GitHub": "1.1.1",
+          "NETStandard.Library": "2.0.3",
+          "Rocket.Surgery.MSBuild.CI": "1.1.0",
+          "Rocket.Surgery.MSBuild.GitVersion": "1.1.0",
+          "Rocket.Surgery.MSBuild.Metadata": "1.1.0",
+          "Rocket.Surgery.MSBuild.SourceLink": "1.1.0",
+          "Xamarin.Forms": "5.0.0.2012"
+        },
+        "runtime": {
+          "Versions.dll": {}
+        }
+      },
+      "Microsoft.Build.Tasks.Git/1.1.1": {},
+      "Microsoft.NETCore.Platforms/1.1.0": {},
+      "Microsoft.NETFramework.ReferenceAssemblies/1.0.2": {},
+      "Microsoft.SourceLink.Common/1.1.1": {},
+      "Microsoft.SourceLink.GitHub/1.1.1": {
+        "dependencies": {
+          "Microsoft.Build.Tasks.Git": "1.1.1",
+          "Microsoft.SourceLink.Common": "1.1.1"
+        }
+      },
+      "NETStandard.Library/2.0.3": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "1.1.0"
+        }
+      },
+      "Rocket.Surgery.MSBuild.CI/1.1.0": {
+        "dependencies": {
+          "Rocket.Surgery.MSBuild.Metadata": "1.1.0"
+        }
+      },
+      "Rocket.Surgery.MSBuild.GitVersion/1.1.0": {
+        "dependencies": {
+          "Rocket.Surgery.MSBuild.Metadata": "1.1.0"
+        }
+      },
+      "Rocket.Surgery.MSBuild.Metadata/1.1.0": {},
+      "Rocket.Surgery.MSBuild.SourceLink/1.1.0": {},
+      "Xamarin.Forms/5.0.0.2012": {
+        "runtime": {
+          "lib/netstandard2.0/Xamarin.Forms.Core.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "5.0.0.671"
+          },
+          "lib/netstandard2.0/Xamarin.Forms.Platform.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "5.0.0.671"
+          },
+          "lib/netstandard2.0/Xamarin.Forms.Xaml.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "5.0.0.671"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Versions/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.Build.Tasks.Git/1.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-AT3HlgTjsqHnWpBHSNeR0KxbLZD7bztlZVj7I8vgeYG9SYqbeFGh0TM/KVtC6fg53nrWHl3VfZFvb5BiQFcY6Q==",
+      "path": "microsoft.build.tasks.git/1.1.1",
+      "hashPath": "microsoft.build.tasks.git.1.1.1.nupkg.sha512"
+    },
+    "Microsoft.NETCore.Platforms/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
+      "path": "microsoft.netcore.platforms/1.1.0",
+      "hashPath": "microsoft.netcore.platforms.1.1.0.nupkg.sha512"
+    },
+    "Microsoft.NETFramework.ReferenceAssemblies/1.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5/cSEVld+px/CuRrbohO/djfg6++eR6zGpy88MgqloXvkj//WXWpFZyu/OpkXPN0u5m+dN/EVwLNYFUxD4h2+A==",
+      "path": "microsoft.netframework.referenceassemblies/1.0.2",
+      "hashPath": "microsoft.netframework.referenceassemblies.1.0.2.nupkg.sha512"
+    },
+    "Microsoft.SourceLink.Common/1.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-WMcGpWKrmJmzrNeuaEb23bEMnbtR/vLmvZtkAP5qWu7vQsY59GqfRJd65sFpBszbd2k/bQ8cs8eWawQKAabkVg==",
+      "path": "microsoft.sourcelink.common/1.1.1",
+      "hashPath": "microsoft.sourcelink.common.1.1.1.nupkg.sha512"
+    },
+    "Microsoft.SourceLink.GitHub/1.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IaJGnOv/M7UQjRJks7B6p7pbPnOwisYGOIzqCz5ilGFTApZ3ktOR+6zJ12ZRPInulBmdAf1SrGdDG2MU8g6XTw==",
+      "path": "microsoft.sourcelink.github/1.1.1",
+      "hashPath": "microsoft.sourcelink.github.1.1.1.nupkg.sha512"
+    },
+    "NETStandard.Library/2.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-st47PosZSHrjECdjeIzZQbzivYBJFv6P2nv4cj2ypdI204DO+vZ7l5raGMiX4eXMJ53RfOIg+/s4DHVZ54Nu2A==",
+      "path": "netstandard.library/2.0.3",
+      "hashPath": "netstandard.library.2.0.3.nupkg.sha512"
+    },
+    "Rocket.Surgery.MSBuild.CI/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-t/L3XI4YH3q3BKUefCgRgmjX34l4YwDTLSmBn2/kTyCa3LCa9+cB7/X/M+tw/AL9G2K/5LcjZGrcBWwn2qHVAA==",
+      "path": "rocket.surgery.msbuild.ci/1.1.0",
+      "hashPath": "rocket.surgery.msbuild.ci.1.1.0.nupkg.sha512"
+    },
+    "Rocket.Surgery.MSBuild.GitVersion/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-oQWQBgmj4YIujABkXU11rBnKPTiODiec6EUGYyemtq6ewwsusc8O4Uj1G5qjCyQ5H5CwFk27TxaAPPvk84Vu4A==",
+      "path": "rocket.surgery.msbuild.gitversion/1.1.0",
+      "hashPath": "rocket.surgery.msbuild.gitversion.1.1.0.nupkg.sha512"
+    },
+    "Rocket.Surgery.MSBuild.Metadata/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-iZM5fhTGNr/9e6h1gPpIiN/YkhRj8djVEMnwnXVXc4NaCnZEFLYMK81qT08Wic+mpDFoEYwYi27wKegKAt2k0w==",
+      "path": "rocket.surgery.msbuild.metadata/1.1.0",
+      "hashPath": "rocket.surgery.msbuild.metadata.1.1.0.nupkg.sha512"
+    },
+    "Rocket.Surgery.MSBuild.SourceLink/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OySbDpky59sksj22tHUA5S/Ii4+X6+KjSdvJFCJQwS7Saw2qJIaHX7SHkuTUI39HgYzxPpRNgadomxYTE4tlKQ==",
+      "path": "rocket.surgery.msbuild.sourcelink/1.1.0",
+      "hashPath": "rocket.surgery.msbuild.sourcelink.1.1.0.nupkg.sha512"
+    },
+    "Xamarin.Forms/5.0.0.2012": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Rqc6xvWR/sf+Db5+qRCFmuYTWVp04QWRfwPto2/JHbShSy4Ed53Q2jpoFzsoloXkJA6saD236PlaWAhT6vI4gw==",
+      "path": "xamarin.forms/5.0.0.2012",
+      "hashPath": "xamarin.forms.5.0.0.2012.nupkg.sha512"
+    }
+  }
+}

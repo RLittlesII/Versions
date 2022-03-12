@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "Ak6hbWGjy2ohqe5kGUcrxJCKiCrJyOa5cRBpHqn7RI8idfDIGleX3CUm2OKwBr6UHQygAIewJw+MjY8XxW6kMA==",
+  "success": true,
+  "projectFilePath": "/Users/rlittlesii/source/rlittlesii/Versions/src/Versions.iOS/Versions.iOS.csproj",
+  "expectedPackageFiles": [
+    "/Users/rlittlesii/.nuget/packages/microsoft.build.tasks.git/1.1.1/microsoft.build.tasks.git.1.1.1.nupkg.sha512",
+    "/Users/rlittlesii/.nuget/packages/microsoft.netframework.referenceassemblies/1.0.2/microsoft.netframework.referenceassemblies.1.0.2.nupkg.sha512",
+    "/Users/rlittlesii/.nuget/packages/microsoft.sourcelink.common/1.1.1/microsoft.sourcelink.common.1.1.1.nupkg.sha512",
+    "/Users/rlittlesii/.nuget/packages/microsoft.sourcelink.github/1.1.1/microsoft.sourcelink.github.1.1.1.nupkg.sha512",
+    "/Users/rlittlesii/.nuget/packages/rocket.surgery.msbuild.ci/1.1.0/rocket.surgery.msbuild.ci.1.1.0.nupkg.sha512",
+    "/Users/rlittlesii/.nuget/packages/rocket.surgery.msbuild.gitversion/1.1.0/rocket.surgery.msbuild.gitversion.1.1.0.nupkg.sha512",
+    "/Users/rlittlesii/.nuget/packages/rocket.surgery.msbuild.metadata/1.1.0/rocket.surgery.msbuild.metadata.1.1.0.nupkg.sha512",
+    "/Users/rlittlesii/.nuget/packages/rocket.surgery.msbuild.sourcelink/1.1.0/rocket.surgery.msbuild.sourcelink.1.1.0.nupkg.sha512",
+    "/Users/rlittlesii/.nuget/packages/xamarin.forms/5.0.0.2012/xamarin.forms.5.0.0.2012.nupkg.sha512"
+  ],
+  "logs": []
+}

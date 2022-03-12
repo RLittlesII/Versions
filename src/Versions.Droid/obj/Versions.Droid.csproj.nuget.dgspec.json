@@ -1,0 +1,249 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/rlittlesii/source/rlittlesii/Versions/src/Versions.Droid/Versions.Droid.csproj": {}
+  },
+  "projects": {
+    "/Users/rlittlesii/source/rlittlesii/Versions/src/Versions.Droid/Versions.Droid.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/rlittlesii/source/rlittlesii/Versions/src/Versions.Droid/Versions.Droid.csproj",
+        "projectName": "Versions.Droid",
+        "projectPath": "/Users/rlittlesii/source/rlittlesii/Versions/src/Versions.Droid/Versions.Droid.csproj",
+        "packagesPath": "/Users/rlittlesii/.nuget/packages/",
+        "outputPath": "/Users/rlittlesii/source/rlittlesii/Versions/src/Versions.Droid/obj/",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "centralPackageVersionsManagementEnabled": true,
+        "configFilePaths": [
+          "/Users/rlittlesii/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "monoandroid12.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "monoandroid12.0": {
+            "projectReferences": {
+              "/Users/rlittlesii/source/rlittlesii/Versions/src/Versions/Versions.csproj": {
+                "projectPath": "/Users/rlittlesii/source/rlittlesii/Versions/src/Versions/Versions.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "monoandroid12.0": {
+          "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "include": "Build, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.2, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.SourceLink.GitHub": {
+              "include": "Build, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.1, )",
+              "versionCentrallyManaged": true
+            },
+            "Rocket.Surgery.MSBuild.CI": {
+              "include": "Build, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.0, )",
+              "versionCentrallyManaged": true
+            },
+            "Rocket.Surgery.MSBuild.GitVersion": {
+              "include": "Build, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.0, )",
+              "versionCentrallyManaged": true
+            },
+            "Rocket.Surgery.MSBuild.Metadata": {
+              "include": "Build, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.0, )",
+              "versionCentrallyManaged": true
+            },
+            "Rocket.Surgery.MSBuild.SourceLink": {
+              "include": "Build, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.0, )",
+              "versionCentrallyManaged": true
+            },
+            "Xamarin.Forms": {
+              "target": "Package",
+              "version": "[5.0.0.2012, )",
+              "versionCentrallyManaged": true
+            }
+          },
+          "centralPackageVersions": {
+            "Bogus": "[34.0.1, )",
+            "coverlet.collector": "[3.1.2, )",
+            "coverlet.msbuild": "[3.1.2, )",
+            "docfx.console": "[2.59.0, )",
+            "FluentAssertions": "[6.5.1, )",
+            "FluentAssertions.Analyzers": "[0.16.0, )",
+            "GitVersion.Tool": "[5.9.0, )",
+            "Microsoft.NET.Test.Sdk": "[17.1.0, )",
+            "Microsoft.NETFramework.ReferenceAssemblies": "[1.0.2, )",
+            "Microsoft.SourceLink.GitHub": "[1.1.1, )",
+            "Nuke.Common": "[6.0.1, )",
+            "ReportGenerator": "[5.1.0, )",
+            "Rocket.Surgery.Extensions.Testing.FakeItEasy": "[6.1.1, )",
+            "Rocket.Surgery.Extensions.Testing.XUnit": "[6.1.1, )",
+            "Rocket.Surgery.MSBuild.CI": "[1.1.0, )",
+            "Rocket.Surgery.MSBuild.GitVersion": "[1.1.0, )",
+            "Rocket.Surgery.MSBuild.Metadata": "[1.1.0, )",
+            "Rocket.Surgery.MSBuild.SourceLink": "[1.1.0, )",
+            "Rocket.Surgery.Nuke": "[0.17.6, )",
+            "Xamarin.Forms": "[5.0.0.2012, )",
+            "xunit": "[2.4.1, )",
+            "xunit.analyzers": "[0.10.0, )",
+            "xunit.runner.visualstudio": "[2.4.3, )"
+          }
+        }
+      }
+    },
+    "/Users/rlittlesii/source/rlittlesii/Versions/src/Versions/Versions.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/rlittlesii/source/rlittlesii/Versions/src/Versions/Versions.csproj",
+        "projectName": "Versions",
+        "projectPath": "/Users/rlittlesii/source/rlittlesii/Versions/src/Versions/Versions.csproj",
+        "packagesPath": "/Users/rlittlesii/.nuget/packages/",
+        "outputPath": "/Users/rlittlesii/source/rlittlesii/Versions/src/Versions/obj/",
+        "projectStyle": "PackageReference",
+        "centralPackageVersionsManagementEnabled": true,
+        "fallbackFolders": [
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/Users/rlittlesii/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "include": "Build, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.2, )",
+              "versionCentrallyManaged": true
+            },
+            "Microsoft.SourceLink.GitHub": {
+              "include": "Build, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.1, )",
+              "versionCentrallyManaged": true
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "Rocket.Surgery.MSBuild.CI": {
+              "include": "Build, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.0, )",
+              "versionCentrallyManaged": true
+            },
+            "Rocket.Surgery.MSBuild.GitVersion": {
+              "include": "Build, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.0, )",
+              "versionCentrallyManaged": true
+            },
+            "Rocket.Surgery.MSBuild.Metadata": {
+              "include": "Build, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.0, )",
+              "versionCentrallyManaged": true
+            },
+            "Rocket.Surgery.MSBuild.SourceLink": {
+              "include": "Build, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.0, )",
+              "versionCentrallyManaged": true
+            },
+            "Xamarin.Forms": {
+              "target": "Package",
+              "version": "[5.0.0.2012, )",
+              "versionCentrallyManaged": true
+            }
+          },
+          "centralPackageVersions": {
+            "Bogus": "[34.0.1, )",
+            "coverlet.collector": "[3.1.2, )",
+            "coverlet.msbuild": "[3.1.2, )",
+            "docfx.console": "[2.59.0, )",
+            "FluentAssertions": "[6.5.1, )",
+            "FluentAssertions.Analyzers": "[0.16.0, )",
+            "GitVersion.Tool": "[5.9.0, )",
+            "Microsoft.NET.Test.Sdk": "[17.1.0, )",
+            "Microsoft.NETFramework.ReferenceAssemblies": "[1.0.2, )",
+            "Microsoft.SourceLink.GitHub": "[1.1.1, )",
+            "Nuke.Common": "[6.0.1, )",
+            "ReportGenerator": "[5.1.0, )",
+            "Rocket.Surgery.Extensions.Testing.FakeItEasy": "[6.1.1, )",
+            "Rocket.Surgery.Extensions.Testing.XUnit": "[6.1.1, )",
+            "Rocket.Surgery.MSBuild.CI": "[1.1.0, )",
+            "Rocket.Surgery.MSBuild.GitVersion": "[1.1.0, )",
+            "Rocket.Surgery.MSBuild.Metadata": "[1.1.0, )",
+            "Rocket.Surgery.MSBuild.SourceLink": "[1.1.0, )",
+            "Rocket.Surgery.Nuke": "[0.17.6, )",
+            "Xamarin.Forms": "[5.0.0.2012, )",
+            "xunit": "[2.4.1, )",
+            "xunit.analyzers": "[0.10.0, )",
+            "xunit.runner.visualstudio": "[2.4.3, )"
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.101/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
