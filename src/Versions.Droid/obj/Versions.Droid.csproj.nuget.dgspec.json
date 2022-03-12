@@ -16,16 +16,17 @@
         "skipContentFileWrite": true,
         "centralPackageVersionsManagementEnabled": true,
         "configFilePaths": [
-          "/Users/rlittlesii/.nuget/NuGet/NuGet.Config"
+          "/Users/rlittlesii/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "monoandroid12.0"
+          "monoandroid11.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://www.myget.org/F/acrfeed/api/v3/index.json": {}
         },
         "frameworks": {
-          "monoandroid12.0": {
+          "monoandroid11.0": {
             "projectReferences": {
               "/Users/rlittlesii/source/rlittlesii/Versions/src/Versions/Versions.csproj": {
                 "projectPath": "/Users/rlittlesii/source/rlittlesii/Versions/src/Versions/Versions.csproj"
@@ -35,7 +36,7 @@
         }
       },
       "frameworks": {
-        "monoandroid12.0": {
+        "monoandroid11.0": {
           "dependencies": {
             "Microsoft.NETFramework.ReferenceAssemblies": {
               "include": "Build, Analyzers, BuildTransitive",
@@ -127,14 +128,15 @@
           "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "/Users/rlittlesii/.nuget/NuGet/NuGet.Config"
+          "/Users/rlittlesii/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.0"
         ],
         "sources": {
           "/usr/local/share/dotnet/library-packs": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://www.myget.org/F/acrfeed/api/v3/index.json": {}
         },
         "frameworks": {
           "netstandard2.0": {
