@@ -4,8 +4,10 @@ using Nuke.Common.IO;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools.Boots;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
+using Rocket.Surgery.Nuke.Azp;
 using Rocket.Surgery.Nuke.Xamarin;
 
 [CheckBuildProjectConfigurations]
@@ -44,7 +46,16 @@ class Versions : NukeBuild,
     [OptionalGitRepository] public GitRepository? GitRepository { get; }
 
     [ComputedGitVersion] public GitVersion GitVersion { get; } = null!;
-    public Target Clean => _ => _.Inherit<ICanClean>(x => x.Clean);
+
+    public Target InstallDotNet => _ =>
+        _.OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
+            .Executes(() =>
+            {
+                BootsTasks.Boots(configurator =>
+                    configurator.SetUrl("https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh"));
+            });
+
+    public Target Clean => _ => _.Inherit<ICanClean>(x => x.Clean).DependsOn(InstallDotNet);
 
     public Target Restore => _ => _.Inherit<ICanRestoreXamarin>(x => x.Restore).DependsOn(Clean);
 
