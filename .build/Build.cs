@@ -10,7 +10,11 @@ using Rocket.Surgery.Nuke.Xamarin;
 
 [CheckBuildProjectConfigurations]
 [UnsetVisualStudioEnvironmentVariables]
-[AzurePipelines(AzurePipelinesImage.MacOs11, InvokedTargets = new[] { nameof(Default) }, AutoGenerate = true)]
+[AzurePipelines(AzurePipelinesImage.MacOs11,
+    FetchDepth = 0,
+    TriggerBranchesInclude = new[] { "main" },
+    InvokedTargets = new[] { nameof(Default) },
+    AutoGenerate = true)]
 class Versions : NukeBuild,
     ICanClean,
     ICanRestoreXamarin,

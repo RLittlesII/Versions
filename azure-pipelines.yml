@@ -14,6 +14,11 @@
 # </auto-generated>
 # ------------------------------------------------------------------------------
 
+trigger:
+  branches:
+    include:
+      - main
+
 stages:
   - stage: macOS_11
     displayName: 'macOS-11'
@@ -25,6 +30,8 @@ stages:
         displayName: 'Clean'
         dependsOn: [  ]
         steps:
+          - checkout: self
+            fetchDepth: 0
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -44,6 +51,8 @@ stages:
         displayName: 'Restore'
         dependsOn: [ Clean, Clean ]
         steps:
+          - checkout: self
+            fetchDepth: 0
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -63,6 +72,8 @@ stages:
         displayName: 'Boots'
         dependsOn: [ Clean, Restore ]
         steps:
+          - checkout: self
+            fetchDepth: 0
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -82,6 +93,8 @@ stages:
         displayName: 'ModifyInfoPlist'
         dependsOn: [ Restore ]
         steps:
+          - checkout: self
+            fetchDepth: 0
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -101,6 +114,8 @@ stages:
         displayName: 'Build'
         dependsOn: [ Restore, Restore, Boots, ModifyInfoPlist ]
         steps:
+          - checkout: self
+            fetchDepth: 0
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -120,6 +135,8 @@ stages:
         displayName: 'Test'
         dependsOn: [ Build ]
         steps:
+          - checkout: self
+            fetchDepth: 0
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -139,6 +156,8 @@ stages:
         displayName: 'Pack'
         dependsOn: [ Test, Build ]
         steps:
+          - checkout: self
+            fetchDepth: 0
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -158,6 +177,8 @@ stages:
         displayName: 'XamariniOS'
         dependsOn: [ Restore, Boots, ModifyInfoPlist, Build, Pack ]
         steps:
+          - checkout: self
+            fetchDepth: 0
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -177,6 +198,8 @@ stages:
         displayName: 'Default'
         dependsOn: [ XamariniOS ]
         steps:
+          - checkout: self
+            fetchDepth: 0
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
