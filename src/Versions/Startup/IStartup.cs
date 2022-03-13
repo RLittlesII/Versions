@@ -2,7 +2,7 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using Xamarin.Forms;
 
-namespace Versions
+namespace Versions.Startup
 {
     public interface IStartup
     {

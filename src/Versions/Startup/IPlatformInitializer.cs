@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Versions
+namespace Versions.Startup
 {
     /// <summary>
     /// Represents an initializer for a specific platform.

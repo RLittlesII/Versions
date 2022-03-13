@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using Versions.Startup;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -10,6 +11,7 @@ namespace Versions
         public App(IPlatformInitializer initializer)
         {
             InitializeComponent();
+
             var _ = new VersionsStartup(initializer);
 
             MainPage = new MainPage();

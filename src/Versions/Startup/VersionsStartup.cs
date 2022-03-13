@@ -1,8 +1,9 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using Versions.Configuration;
 using Xamarin.Forms;
 
-namespace Versions
+namespace Versions.Startup
 {
     public class VersionsStartup : IStartup
     {
@@ -12,6 +13,11 @@ namespace Versions
         public IServiceProvider ConfigureServices(IServiceCollection serviceCollection) =>
             serviceCollection
                 .AddPlatform(_platformInitializer)
+                .ConfigureOptions<FormsSettings>()
+                .ConfigureOptions<AppSettings>()
+                .AddMarbles()
+                .AddReactiveUI()
+                .UseServiceProviderAsLocator()
                 .BuildServiceProvider();
 
         /// <inheritdoc />

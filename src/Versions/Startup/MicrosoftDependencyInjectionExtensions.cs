@@ -7,7 +7,7 @@ using Splat;
 using Splat.Microsoft.Extensions.DependencyInjection;
 using Splat.Microsoft.Extensions.Logging;
 
-namespace Versions
+namespace Versions.Startup
 {
     public static class MicrosoftDependencyInjectionExtensions
     {
@@ -27,18 +27,6 @@ namespace Versions
             return serviceCollection;
         }
 
-        /// <summary>
-        /// Registers <see cref="Sextant"/> to the container.
-        /// </summary>
-        /// <param name="serviceCollection">The service collection.</param>
-        /// <returns>The container collection.</returns>
-        public static IServiceCollection AddSextant(this IServiceCollection serviceCollection) =>
-            serviceCollection;
-                // .AddSingleton<IViewLocator>(_ => ViewLocator.Current)
-                // .AddSingleton<IViewModelFactory, PuppyViewModelFactory>()
-                // .AddSingleton<IView>(provider => new NavigationView(RxApp.MainThreadScheduler, RxApp.TaskpoolScheduler, provider.GetService<IViewLocator>()!))
-                // .AddSingleton<IPopupNavigation>(PopupNavigation.Instance)
-                // .AddSingleton<IPopupViewStackService, PopupViewStackService>();
 
         public static IServiceCollection AddMarbles(this IServiceCollection serviceCollection)
         {
