@@ -46,7 +46,7 @@ stages:
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.sh InstallDotNet --skip'
+              script: './build.cmd InstallDotNet --skip'
       - job: Clean
         displayName: 'Clean'
         dependsOn: [ InstallDotNet ]
@@ -67,7 +67,7 @@ stages:
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.sh Clean --skip'
+              script: './build.cmd Clean --skip'
       - job: Restore
         displayName: 'Restore'
         dependsOn: [ Clean, Clean ]
@@ -88,7 +88,7 @@ stages:
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.sh Restore --skip'
+              script: './build.cmd Restore --skip'
       - job: Boots
         displayName: 'Boots'
         dependsOn: [ Clean, Restore ]
@@ -109,7 +109,7 @@ stages:
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.sh Boots --skip'
+              script: './build.cmd Boots --skip'
       - job: ModifyInfoPlist
         displayName: 'ModifyInfoPlist'
         dependsOn: [ Restore ]
@@ -130,7 +130,7 @@ stages:
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.sh ModifyInfoPlist --skip'
+              script: './build.cmd ModifyInfoPlist --skip'
       - job: Build
         displayName: 'Build'
         dependsOn: [ Restore, Restore, Boots, ModifyInfoPlist ]
@@ -151,7 +151,7 @@ stages:
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.sh Build --skip'
+              script: './build.cmd Build --skip'
       - job: Test
         displayName: 'Test'
         dependsOn: [ Build ]
@@ -172,7 +172,7 @@ stages:
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.sh Test --skip'
+              script: './build.cmd Test --skip'
       - job: Pack
         displayName: 'Pack'
         dependsOn: [ Test, Build ]
@@ -193,7 +193,7 @@ stages:
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.sh Pack --skip'
+              script: './build.cmd Pack --skip'
       - job: XamariniOS
         displayName: 'XamariniOS'
         dependsOn: [ Restore, Boots, ModifyInfoPlist, Build, Pack ]
@@ -214,7 +214,7 @@ stages:
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.sh XamariniOS --skip'
+              script: './build.cmd XamariniOS --skip'
       - job: Default
         displayName: 'Default'
         dependsOn: [ XamariniOS ]
@@ -235,4 +235,4 @@ stages:
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.sh Default --skip'
+              script: './build.cmd Default --skip'

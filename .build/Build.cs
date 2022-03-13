@@ -49,11 +49,7 @@ class Versions : NukeBuild,
 
     public Target InstallDotNet => _ =>
         _.OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
-            .Executes(() =>
-            {
-                BootsTasks.Boots(configurator =>
-                    configurator.SetUrl("https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh"));
-            });
+            .Executes(() => DotNetTasks.DotNetToolUpdate(configurator => configurator.EnableGlobal().SetVersion("6.0")));
 
     public Target Clean => _ => _.Inherit<ICanClean>(x => x.Clean).DependsOn(InstallDotNet);
 
