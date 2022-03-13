@@ -370,10 +370,7 @@ src/Tools/
 
 # MSBuild generator editor configs
 **/*.GeneratedMSBuildEditorConfig.editorconfig
-src/Versions/bin/
 
-src/Versions/obj/
-
-src/Versions.iOS/bin/
-
-src/Versions.iOS/obj/
+# Nuke
+.build/.vs
+.nuke

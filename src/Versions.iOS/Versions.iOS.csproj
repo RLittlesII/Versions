@@ -107,6 +107,7 @@
         <Reference Include="Xamarin.iOS" />
     </ItemGroup>
     <ItemGroup>
+        <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" />
         <PackageReference Include="Xamarin.Forms" />
     </ItemGroup>
     <ItemGroup>
