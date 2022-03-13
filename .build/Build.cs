@@ -1,14 +1,11 @@
 using Nuke.Common;
 using Nuke.Common.CI.AzurePipelines;
-using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.IO;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
-using Rocket.Surgery.Nuke.ContinuousIntegration;
-using Rocket.Surgery.Nuke.GithubActions;
 using Rocket.Surgery.Nuke.Xamarin;
 
 [CheckBuildProjectConfigurations]

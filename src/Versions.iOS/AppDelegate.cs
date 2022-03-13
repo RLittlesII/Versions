@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Foundation;
+using Microsoft.Extensions.Configuration;
 using UIKit;
 
 namespace Versions.iOS
@@ -22,7 +23,15 @@ namespace Versions.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+
+            var initializer =
+                new iOSInitializer(new ConfigurationBuilder()
+                    .AddJsonFile("ios.appsettings.json")
+                    .AddJsonFile("appsettings.dev.json",
+                        true)
+                    .Build());
+
+            LoadApplication(new App(initializer));
 
             return base.FinishedLaunching(app, options);
         }
