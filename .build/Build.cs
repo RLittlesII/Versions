@@ -1,4 +1,5 @@
 using Nuke.Common;
+using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.IO;
 using Nuke.Common.Execution;
@@ -12,13 +13,14 @@ using Rocket.Surgery.Nuke.Xamarin;
 
 [CheckBuildProjectConfigurations]
 [UnsetVisualStudioEnvironmentVariables]
+[AzurePipelines(AzurePipelinesImage.MacOs11, InvokedTargets = new[] { nameof(Default) }, AutoGenerate = true)]
 class Versions : NukeBuild,
-                    ICanClean,
-                    ICanRestoreXamarin,
-                    ICanBuildXamariniOS,
-                    ICanPackXamariniOS,
-                    ICanTestXamarin,
-                    IHaveConfiguration<Configuration>
+    ICanClean,
+    ICanRestoreXamarin,
+    ICanBuildXamariniOS,
+    ICanPackXamariniOS,
+    ICanTestXamarin,
+    IHaveConfiguration<Configuration>
 {
     /// <summary>
     /// Support plugins are available for:
@@ -27,7 +29,6 @@ class Versions : NukeBuild,
     ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
     ///   - Microsoft VSCode           https://nuke.build/vscode
     /// </summary>
-
     public static int Main() => Execute<Versions>(x => x.Default);
 
     public AbsolutePath InfoPlist { get; } = RootDirectory / "src" / "Versions.iOS" / "info.plist";
@@ -39,11 +40,9 @@ class Versions : NukeBuild,
 
     public TargetPlatform iOSTargetPlatform { get; } = TargetPlatform.iPhoneSimulator;
 
-    [OptionalGitRepository]
-    public GitRepository? GitRepository { get; }
+    [OptionalGitRepository] public GitRepository? GitRepository { get; }
 
-    [ComputedGitVersion]
-    public GitVersion GitVersion { get; } = null!;
+    [ComputedGitVersion] public GitVersion GitVersion { get; } = null!;
     public Target Clean => _ => _.Inherit<ICanClean>(x => x.Clean);
 
     public Target Restore => _ => _.Inherit<ICanRestoreXamarin>(x => x.Restore).DependsOn(Clean);
@@ -59,7 +58,9 @@ class Versions : NukeBuild,
 
     public Target Test => _ => _
         .DependsOn(Build)
-        .Executes(() => { });
+        .Executes(() =>
+        {
+        });
 
     public Target Boots => _ => _
         .DependsOn(Clean)
@@ -84,7 +85,7 @@ class Versions : NukeBuild,
         .DependsOn(XamariniOS);
 
     public Target BuildVersion => _ => _
-       .Inherit<IHaveBuildVersion>(x => x.BuildVersion)
-       .Before(Default)
-       .Before(Clean);
+        .Inherit<IHaveBuildVersion>(x => x.BuildVersion)
+        .Before(Default)
+        .Before(Clean);
 }
