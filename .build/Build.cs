@@ -1,3 +1,4 @@
+using Azp;
 using Nuke.Common;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.IO;
@@ -12,12 +13,7 @@ using Rocket.Surgery.Nuke.Xamarin;
 
 [CheckBuildProjectConfigurations]
 [UnsetVisualStudioEnvironmentVariables]
-[AzurePipelines(AzurePipelinesImage.MacOs11,
-    FetchDepth = 0,
-    TriggerBranchesInclude = new[] { "main" },
-    InvokedTargets = new[] { nameof(Default) },
-    AutoGenerate = true)]
-class Versions : NukeBuild,
+partial class Versions : NukeBuild,
     ICanClean,
     ICanRestoreXamarin,
     ICanBuildXamariniOS,
@@ -49,7 +45,7 @@ class Versions : NukeBuild,
 
     public Target InstallDotNet => _ =>
         _.OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
-            .Executes(() => DotNetTasks.DotNetToolUpdate(configurator => configurator.EnableGlobal().SetVersion("6.0")));
+            .Executes(() => {});
 
     public Target Clean => _ => _.Inherit<ICanClean>(x => x.Clean).DependsOn(InstallDotNet);
 
