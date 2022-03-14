@@ -1,12 +1,15 @@
 assembly-versioning-scheme: MajorMinorPatchTag
+assembly-file-versioning-format: '{Major}.{Minor}.{Patch}.{env:BUILD_NUMBER ?? 1}'
 continuous-delivery-fallback-tag: alpha
 commit-message-incrementing: Enabled
 mode: Mainline
+update-build-number: true
 branches:
-  master:
+  main:
+    regex: ^master$|^main$
     mode: ContinuousDelivery
     tag: ''
-    increment: Minor
+    increment: Patch
     prevent-increment-of-merged-branch-version: true
     track-merge-target: false
     tracks-release-branches: false
