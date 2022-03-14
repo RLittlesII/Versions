@@ -20,28 +20,16 @@ trigger:
       - main
 
 stages:
-  - stage: macOS_11
-    displayName: 'macOS-11'
+  - stage: macOS_latest
+    displayName: 'macOS-latest'
     dependsOn: [  ]
     pool:
-      vmImage: 'macOS-11'
+      vmImage: 'macOS-latest'
     jobs:
       - job: InstallDotNet
         displayName: 'InstallDotNet'
         dependsOn: [  ]
         steps:
-          - task: UseDotNet@2
-            displayName: 'Use .NET Core sdk'
-            inputs:
-              packageType: sdk
-              version: 6.0.x
-              installationPath: $(Agent.ToolsDirectory)/dotnet
-      - job: Clean
-        displayName: 'Clean'
-        dependsOn: [ InstallDotNet ]
-        steps:
-          - checkout: self
-            fetchDepth: 0
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -56,13 +44,36 @@ stages:
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
+              script: './build.cmd InstallDotNet --skip'
+      - job: Clean
+        displayName: 'Clean'
+        dependsOn: [ InstallDotNet ]
+        steps:
+          - task: Cache@2
+            displayName: Cache (nuke-temp)
+            inputs:
+              key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
+              restoreKeys: $(Agent.OS) | nuke-temp
+              path: .nuke/temp
+          - task: Cache@2
+            displayName: Cache (nuget-packages)
+            inputs:
+              key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
+              restoreKeys: $(Agent.OS) | nuget-packages
+              path: $(HOME)/.nuget/packages
+          - task: UseDotNet@2
+            displayName: 'Use .NET Core sdk'
+            inputs:
+              packageType: sdk
+              version: 6.0.x
+              installationPath: $(Agent.ToolsDirectory)/dotnet
+          - task: CmdLine@2
+            inputs:
               script: './build.cmd Clean --skip'
       - job: Restore
         displayName: 'Restore'
         dependsOn: [ Clean, Clean ]
         steps:
-          - checkout: self
-            fetchDepth: 0
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -82,8 +93,6 @@ stages:
         displayName: 'Boots'
         dependsOn: [ Clean, Restore ]
         steps:
-          - checkout: self
-            fetchDepth: 0
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -103,8 +112,6 @@ stages:
         displayName: 'ModifyInfoPlist'
         dependsOn: [ Restore ]
         steps:
-          - checkout: self
-            fetchDepth: 0
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -124,8 +131,6 @@ stages:
         displayName: 'Build'
         dependsOn: [ Restore, Restore, Boots, ModifyInfoPlist ]
         steps:
-          - checkout: self
-            fetchDepth: 0
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -145,8 +150,6 @@ stages:
         displayName: 'Test'
         dependsOn: [ Build ]
         steps:
-          - checkout: self
-            fetchDepth: 0
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -166,8 +169,6 @@ stages:
         displayName: 'Pack'
         dependsOn: [ Test, Build ]
         steps:
-          - checkout: self
-            fetchDepth: 0
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -187,8 +188,6 @@ stages:
         displayName: 'XamariniOS'
         dependsOn: [ Restore, Boots, ModifyInfoPlist, Build, Pack ]
         steps:
-          - checkout: self
-            fetchDepth: 0
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -208,8 +207,6 @@ stages:
         displayName: 'Default'
         dependsOn: [ XamariniOS ]
         steps:
-          - checkout: self
-            fetchDepth: 0
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
