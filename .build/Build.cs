@@ -43,11 +43,7 @@ partial class Versions : NukeBuild,
 
     [ComputedGitVersion] public GitVersion GitVersion { get; } = null!;
 
-    public Target InstallDotNet => _ =>
-        _.OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
-            .Executes(() => {});
-
-    public Target Clean => _ => _.Inherit<ICanClean>(x => x.Clean).DependsOn(InstallDotNet);
+    public Target Clean => _ => _.Inherit<ICanClean>(x => x.Clean);
 
     public Target Restore => _ => _.Inherit<ICanRestoreXamarin>(x => x.Restore).DependsOn(Clean);
 

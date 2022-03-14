@@ -26,28 +26,9 @@ stages:
     pool:
       vmImage: 'macOS-latest'
     jobs:
-      - job: InstallDotNet
-        displayName: 'InstallDotNet'
-        dependsOn: [  ]
-        steps:
-          - task: Cache@2
-            displayName: Cache (nuke-temp)
-            inputs:
-              key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuke-temp
-              path: .nuke/temp
-          - task: Cache@2
-            displayName: Cache (nuget-packages)
-            inputs:
-              key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuget-packages
-              path: $(HOME)/.nuget/packages
-          - task: CmdLine@2
-            inputs:
-              script: './build.cmd InstallDotNet --skip'
       - job: Clean
         displayName: 'Clean'
-        dependsOn: [ InstallDotNet ]
+        dependsOn: [  ]
         steps:
           - task: Cache@2
             displayName: Cache (nuke-temp)
@@ -86,6 +67,7 @@ stages:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(HOME)/.nuget/packages
+              
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore --skip'
