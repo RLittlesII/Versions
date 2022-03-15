@@ -5,7 +5,7 @@ using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.AzurePipelines.Configuration;
 using Nuke.Common.Execution;
 
-[AzurePipelines(AzurePipelinesImage.MacOsLatest,
+[Azp.AzurePipelines(AzurePipelinesImage.MacOsLatest,
     TriggerBranchesInclude = new[] { "main" },
     InvokedTargets = new[] { nameof(Default) },
     AutoGenerate = true)]

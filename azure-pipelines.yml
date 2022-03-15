@@ -30,6 +30,12 @@ stages:
         displayName: 'Clean'
         dependsOn: [  ]
         steps:
+          - task: UseDotNet@2
+            displayName: 'Use .NET Core sdk'
+            inputs:
+              packageType: sdk
+              version: 6.0.x
+              installationPath: $(Agent.ToolsDirectory)/dotnet
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -42,12 +48,6 @@ stages:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(HOME)/.nuget/packages
-          - task: UseDotNet@2
-            displayName: 'Use .NET Core sdk'
-            inputs:
-              packageType: sdk
-              version: 6.0.x
-              installationPath: $(Agent.ToolsDirectory)/dotnet
           - task: CmdLine@2
             inputs:
               script: './build.cmd Clean --skip'
@@ -55,6 +55,12 @@ stages:
         displayName: 'Restore'
         dependsOn: [ Clean, Clean ]
         steps:
+          - task: UseDotNet@2
+            displayName: 'Use .NET Core sdk'
+            inputs:
+              packageType: sdk
+              version: 6.0.x
+              installationPath: $(Agent.ToolsDirectory)/dotnet
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -67,7 +73,6 @@ stages:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(HOME)/.nuget/packages
-              
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore --skip'
@@ -75,6 +80,12 @@ stages:
         displayName: 'Boots'
         dependsOn: [ Clean, Restore ]
         steps:
+          - task: UseDotNet@2
+            displayName: 'Use .NET Core sdk'
+            inputs:
+              packageType: sdk
+              version: 6.0.x
+              installationPath: $(Agent.ToolsDirectory)/dotnet
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -94,6 +105,12 @@ stages:
         displayName: 'ModifyInfoPlist'
         dependsOn: [ Restore ]
         steps:
+          - task: UseDotNet@2
+            displayName: 'Use .NET Core sdk'
+            inputs:
+              packageType: sdk
+              version: 6.0.x
+              installationPath: $(Agent.ToolsDirectory)/dotnet
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -113,6 +130,12 @@ stages:
         displayName: 'Build'
         dependsOn: [ Restore, Restore, Boots, ModifyInfoPlist ]
         steps:
+          - task: UseDotNet@2
+            displayName: 'Use .NET Core sdk'
+            inputs:
+              packageType: sdk
+              version: 6.0.x
+              installationPath: $(Agent.ToolsDirectory)/dotnet
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -132,6 +155,12 @@ stages:
         displayName: 'Test'
         dependsOn: [ Build ]
         steps:
+          - task: UseDotNet@2
+            displayName: 'Use .NET Core sdk'
+            inputs:
+              packageType: sdk
+              version: 6.0.x
+              installationPath: $(Agent.ToolsDirectory)/dotnet
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -151,6 +180,12 @@ stages:
         displayName: 'Pack'
         dependsOn: [ Test, Build ]
         steps:
+          - task: UseDotNet@2
+            displayName: 'Use .NET Core sdk'
+            inputs:
+              packageType: sdk
+              version: 6.0.x
+              installationPath: $(Agent.ToolsDirectory)/dotnet
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -170,6 +205,12 @@ stages:
         displayName: 'XamariniOS'
         dependsOn: [ Restore, Boots, ModifyInfoPlist, Build, Pack ]
         steps:
+          - task: UseDotNet@2
+            displayName: 'Use .NET Core sdk'
+            inputs:
+              packageType: sdk
+              version: 6.0.x
+              installationPath: $(Agent.ToolsDirectory)/dotnet
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -189,6 +230,12 @@ stages:
         displayName: 'Default'
         dependsOn: [ XamariniOS ]
         steps:
+          - task: UseDotNet@2
+            displayName: 'Use .NET Core sdk'
+            inputs:
+              packageType: sdk
+              version: 6.0.x
+              installationPath: $(Agent.ToolsDirectory)/dotnet
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
