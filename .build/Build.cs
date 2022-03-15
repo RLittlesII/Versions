@@ -1,15 +1,13 @@
-using Azp;
 using Nuke.Common;
-using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.IO;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.Tooling;
-using Nuke.Common.Tools.Boots;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
-using Rocket.Surgery.Nuke.Azp;
+using Nuke.Common.Tools.MSBuild;
 using Rocket.Surgery.Nuke.Xamarin;
+using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 
 [CheckBuildProjectConfigurations]
 [UnsetVisualStudioEnvironmentVariables]
@@ -47,10 +45,20 @@ partial class Versions : NukeBuild,
 
     public Target Restore => _ => _.Inherit<ICanRestoreXamarin>(x => x.Restore).DependsOn(Clean);
 
-    public Target Build => _ => _.Inherit<ICanBuildXamariniOS>(x => x.BuildiPhone)
-        .DependsOn(Restore)
+    public Target Build => _ => _.DependsOn(Restore)
         .DependsOn(Boots)
-        .DependsOn(ModifyInfoPlist);
+        .DependsOn(ModifyInfoPlist)
+        .Executes(() => MSBuild(
+            settings =>
+                settings
+                    .SetSolutionFile(((IHaveSolution) this).Solution)
+                    .EnableRestore()
+                    .SetProperty("Platform", iOSTargetPlatform)
+                    .SetConfiguration(Configuration)
+                    .SetDefaultLoggers(((IHaveOutputLogs) this).LogsDirectory / "build.log")
+                    .SetGitVersionEnvironment(GitVersion)
+                    .SetAssemblyVersion(GitVersion?.AssemblySemVer)
+                    .SetPackageVersion(GitVersion?.NuGetVersionV2)));
 
     public Target ModifyInfoPlist => _ => _.Inherit<ICanBuildXamariniOS>(x => x.ModifyInfoPlist);
 
