@@ -36,18 +36,6 @@ stages:
               packageType: sdk
               version: 6.0.x
               installationPath: $(Agent.ToolsDirectory)/dotnet
-          - task: Cache@2
-            displayName: Cache (nuke-temp)
-            inputs:
-              key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuke-temp
-              path: .nuke/temp
-          - task: Cache@2
-            displayName: Cache (nuget-packages)
-            inputs:
-              key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuget-packages
-              path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Clean --skip'
@@ -61,18 +49,6 @@ stages:
               packageType: sdk
               version: 6.0.x
               installationPath: $(Agent.ToolsDirectory)/dotnet
-          - task: Cache@2
-            displayName: Cache (nuke-temp)
-            inputs:
-              key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuke-temp
-              path: .nuke/temp
-          - task: Cache@2
-            displayName: Cache (nuget-packages)
-            inputs:
-              key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuget-packages
-              path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore --skip'
@@ -86,18 +62,6 @@ stages:
               packageType: sdk
               version: 6.0.x
               installationPath: $(Agent.ToolsDirectory)/dotnet
-          - task: Cache@2
-            displayName: Cache (nuke-temp)
-            inputs:
-              key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuke-temp
-              path: .nuke/temp
-          - task: Cache@2
-            displayName: Cache (nuget-packages)
-            inputs:
-              key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuget-packages
-              path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Boots --skip'
@@ -111,24 +75,12 @@ stages:
               packageType: sdk
               version: 6.0.x
               installationPath: $(Agent.ToolsDirectory)/dotnet
-          - task: Cache@2
-            displayName: Cache (nuke-temp)
-            inputs:
-              key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuke-temp
-              path: .nuke/temp
-          - task: Cache@2
-            displayName: Cache (nuget-packages)
-            inputs:
-              key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuget-packages
-              path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd ModifyInfoPlist --skip'
       - job: Build
         displayName: 'Build'
-        dependsOn: [ Restore, Restore, Boots, ModifyInfoPlist ]
+        dependsOn: [ Restore, Boots, ModifyInfoPlist ]
         steps:
           - task: UseDotNet@2
             displayName: 'Use .NET Core sdk'
@@ -136,18 +88,6 @@ stages:
               packageType: sdk
               version: 6.0.x
               installationPath: $(Agent.ToolsDirectory)/dotnet
-          - task: Cache@2
-            displayName: Cache (nuke-temp)
-            inputs:
-              key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuke-temp
-              path: .nuke/temp
-          - task: Cache@2
-            displayName: Cache (nuget-packages)
-            inputs:
-              key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuget-packages
-              path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Build --skip'
@@ -161,18 +101,6 @@ stages:
               packageType: sdk
               version: 6.0.x
               installationPath: $(Agent.ToolsDirectory)/dotnet
-          - task: Cache@2
-            displayName: Cache (nuke-temp)
-            inputs:
-              key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuke-temp
-              path: .nuke/temp
-          - task: Cache@2
-            displayName: Cache (nuget-packages)
-            inputs:
-              key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuget-packages
-              path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Test --skip'
@@ -186,18 +114,6 @@ stages:
               packageType: sdk
               version: 6.0.x
               installationPath: $(Agent.ToolsDirectory)/dotnet
-          - task: Cache@2
-            displayName: Cache (nuke-temp)
-            inputs:
-              key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuke-temp
-              path: .nuke/temp
-          - task: Cache@2
-            displayName: Cache (nuget-packages)
-            inputs:
-              key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuget-packages
-              path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Pack --skip'
@@ -211,18 +127,6 @@ stages:
               packageType: sdk
               version: 6.0.x
               installationPath: $(Agent.ToolsDirectory)/dotnet
-          - task: Cache@2
-            displayName: Cache (nuke-temp)
-            inputs:
-              key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuke-temp
-              path: .nuke/temp
-          - task: Cache@2
-            displayName: Cache (nuget-packages)
-            inputs:
-              key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuget-packages
-              path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd XamariniOS --skip'
@@ -236,18 +140,6 @@ stages:
               packageType: sdk
               version: 6.0.x
               installationPath: $(Agent.ToolsDirectory)/dotnet
-          - task: Cache@2
-            displayName: Cache (nuke-temp)
-            inputs:
-              key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuke-temp
-              path: .nuke/temp
-          - task: Cache@2
-            displayName: Cache (nuget-packages)
-            inputs:
-              key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
-              restoreKeys: $(Agent.OS) | nuget-packages
-              path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Default --skip'
