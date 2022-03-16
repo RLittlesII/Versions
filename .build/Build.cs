@@ -2,10 +2,9 @@ using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;
-using Nuke.Common.Tooling;
-using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MSBuild;
+using Rocket.Surgery.Nuke.Azp;
 using Rocket.Surgery.Nuke.Xamarin;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 
@@ -41,12 +40,13 @@ partial class Versions : NukeBuild,
 
     [ComputedGitVersion] public GitVersion GitVersion { get; } = null!;
 
-    public Target Clean => _ => _.Inherit<ICanClean>(x => x.Clean);
+    public Target Clean => _ => _
+        .DependsOn(BuildVersion)
+        .Inherit<ICanClean>(x => x.Clean);
 
-    public Target Restore => _ => _.Inherit<ICanRestoreXamarin>(x => x.Restore).DependsOn(Clean);
+    public Target Restore => _ => _.DependsOn(Clean).Inherit<ICanRestoreXamarin>(x => x.Restore);
 
     public Target Build => _ => _.DependsOn(Restore)
-        .DependsOn(Boots)
         .DependsOn(ModifyInfoPlist)
         .Executes(() => MSBuild(
             settings =>
@@ -62,38 +62,40 @@ partial class Versions : NukeBuild,
 
     public Target ModifyInfoPlist => _ => _.Inherit<ICanBuildXamariniOS>(x => x.ModifyInfoPlist);
 
-    public Target Pack => _ => _.Inherit<ICanPackXamariniOS>(x => x.PackiPhone).DependsOn(Build);
+    public Target Pack => _ => _;
 
-    public Target Test => _ => _
-        .DependsOn(Build)
-        .Executes(() =>
-        {
-        });
+    public Target Test => _ => _;
 
-    public Target Boots => _ => _
-        .DependsOn(Clean)
-        .DependsOn(Restore)
-        .OnlyWhenStatic(() => !IsLocalBuild)
-        .Executes(() =>
-        {
-            DotNetTasks.DotNetToolInstall(cfg => cfg.SetPackageName("Boots").EnableGlobal());
-            ProcessTasks.StartProcess("boots", "--preview Mono");
-            ProcessTasks.StartProcess("boots", "--preview Xamarin.Android");
-            ProcessTasks.StartProcess("boots", "--preview Xamarin.iOS");
-        });
+    /// <summary>
+    ///     packages a binary for distribution.
+    /// </summary>
+    public Target ArchiveIpa => _ => _
+        .DependsOn(ModifyInfoPlist)
+        .OnlyWhenStatic(() => EnvironmentInfo.Platform == PlatformFamily.OSX)
+        .Executes(() => MSBuild(settings =>
+            settings.SetSolutionFile(((IHaveSolution) this).Solution)
+                .EnableRestore()
+                .SetConfiguration(Configuration.Release)
+                .SetProperty("Platform", iOSTargetPlatform)
+                .SetProperty("BuildIpa", "true")
+                .SetProperty("ArchiveOnBuild", "true")
+                .SetConfiguration(Configuration)
+                .SetDefaultLoggers(((IHaveOutputLogs) this).LogsDirectory / "package.log")
+                .SetGitVersionEnvironment(GitVersion)
+                .SetAssemblyVersion(GitVersion?.AssemblySemVer)
+                .SetPackageVersion(GitVersion?.NuGetVersionV2)));
 
     public Target XamariniOS => _ => _
+        .DependsOn(Clean)
         .DependsOn(Restore)
-        .DependsOn(Boots)
         .DependsOn(ModifyInfoPlist)
-        .DependsOn(Build)
-        .DependsOn(Pack);
+        .DependsOn(ArchiveIpa);
 
     public Target Default => _ => _
         .DependsOn(XamariniOS);
 
     public Target BuildVersion => _ => _
-        .Inherit<IHaveBuildVersion>(x => x.BuildVersion)
-        .Before(Default)
-        .Before(Clean);
+        .Before(Clean)
+        .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
+        .Inherit<IHaveBuildVersion>(x => x.BuildVersion);
 }

@@ -79,7 +79,7 @@
           "items": {
             "type": "string",
             "enum": [
-              "Boots",
+              "ArchiveIpa",
               "Build",
               "BuildiPhone",
               "BuildVersion",
@@ -104,7 +104,7 @@
           "items": {
             "type": "string",
             "enum": [
-              "Boots",
+              "ArchiveIpa",
               "Build",
               "BuildiPhone",
               "BuildVersion",

@@ -26,9 +26,22 @@ stages:
     pool:
       vmImage: 'macOS-latest'
     jobs:
+      - job: BuildVersion
+        displayName: 'BuildVersion'
+        dependsOn: [  ]
+        steps:
+          - task: UseDotNet@2
+            displayName: 'Use .NET Core sdk'
+            inputs:
+              packageType: sdk
+              version: 6.0.x
+              installationPath: $(Agent.ToolsDirectory)/dotnet
+          - task: CmdLine@2
+            inputs:
+              script: './build.cmd BuildVersion --skip'
       - job: Clean
         displayName: 'Clean'
-        dependsOn: [  ]
+        dependsOn: [ BuildVersion ]
         steps:
           - task: UseDotNet@2
             displayName: 'Use .NET Core sdk'
@@ -52,19 +65,6 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore --skip'
-      - job: Boots
-        displayName: 'Boots'
-        dependsOn: [ Clean, Restore ]
-        steps:
-          - task: UseDotNet@2
-            displayName: 'Use .NET Core sdk'
-            inputs:
-              packageType: sdk
-              version: 6.0.x
-              installationPath: $(Agent.ToolsDirectory)/dotnet
-          - task: CmdLine@2
-            inputs:
-              script: './build.cmd Boots --skip'
       - job: ModifyInfoPlist
         displayName: 'ModifyInfoPlist'
         dependsOn: [ Restore ]
@@ -78,9 +78,9 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd ModifyInfoPlist --skip'
-      - job: Build
-        displayName: 'Build'
-        dependsOn: [ Restore, Boots, ModifyInfoPlist ]
+      - job: ArchiveIpa
+        displayName: 'ArchiveIpa'
+        dependsOn: [ ModifyInfoPlist ]
         steps:
           - task: UseDotNet@2
             displayName: 'Use .NET Core sdk'
@@ -90,36 +90,10 @@ stages:
               installationPath: $(Agent.ToolsDirectory)/dotnet
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Build --skip'
-      - job: Test
-        displayName: 'Test'
-        dependsOn: [ Build ]
-        steps:
-          - task: UseDotNet@2
-            displayName: 'Use .NET Core sdk'
-            inputs:
-              packageType: sdk
-              version: 6.0.x
-              installationPath: $(Agent.ToolsDirectory)/dotnet
-          - task: CmdLine@2
-            inputs:
-              script: './build.cmd Test --skip'
-      - job: Pack
-        displayName: 'Pack'
-        dependsOn: [ Test, Build ]
-        steps:
-          - task: UseDotNet@2
-            displayName: 'Use .NET Core sdk'
-            inputs:
-              packageType: sdk
-              version: 6.0.x
-              installationPath: $(Agent.ToolsDirectory)/dotnet
-          - task: CmdLine@2
-            inputs:
-              script: './build.cmd Pack --skip'
+              script: './build.cmd ArchiveIpa --skip'
       - job: XamariniOS
         displayName: 'XamariniOS'
-        dependsOn: [ Restore, Boots, ModifyInfoPlist, Build, Pack ]
+        dependsOn: [ Clean, Restore, ModifyInfoPlist, ArchiveIpa ]
         steps:
           - task: UseDotNet@2
             displayName: 'Use .NET Core sdk'
