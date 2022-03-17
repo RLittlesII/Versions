@@ -2,10 +2,12 @@ using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;
+using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MSBuild;
 using Rocket.Surgery.Nuke.Azp;
 using Rocket.Surgery.Nuke.Xamarin;
+using Serilog;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 
 [CheckBuildProjectConfigurations]
@@ -16,6 +18,7 @@ partial class Versions : NukeBuild,
     ICanBuildXamariniOS,
     ICanPackXamariniOS,
     ICanTestXamarin,
+    ICanArchiveiOS,
     IHaveConfiguration<Configuration>
 {
     /// <summary>
@@ -29,30 +32,42 @@ partial class Versions : NukeBuild,
 
     public AbsolutePath InfoPlist { get; } = RootDirectory / "src" / "Versions.iOS" / "info.plist";
 
-    public string BaseBundleIdentifier { get; } = "com.companyname.Versions";
+    public string BaseBundleIdentifier { get; } = "com.companyname.versions";
+
+    public TargetPlatform iOSTargetPlatform { get; } = TargetPlatform.iPhoneSimulator;
 
     [Parameter("Configuration to build")]
     public Configuration Configuration { get; } = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
-    public TargetPlatform iOSTargetPlatform { get; } = TargetPlatform.iPhoneSimulator;
+    [Parameter("")] public string SigningCertificate { get; } = "";
+
+    [Parameter("")] public string ProvisioningProfile { get; } = "";
+
 
     [OptionalGitRepository] public GitRepository? GitRepository { get; }
 
     [ComputedGitVersion] public GitVersion GitVersion { get; } = null!;
 
+    [Parameter] public bool EnableRestore { get; } = AzurePipelinesTasks.IsRunningOnAzurePipelines.Compile().Invoke();
+
+    public Target BuildVersion => _ => _
+        .Before(Clean)
+        .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
+        .Inherit<IHaveBuildVersion>(x => x.BuildVersion);
+
     public Target Clean => _ => _
         .DependsOn(BuildVersion)
         .Inherit<ICanClean>(x => x.Clean);
 
-    public Target Restore => _ => _.DependsOn(Clean).Inherit<ICanRestoreXamarin>(x => x.Restore);
+    public Target Restore => _ => _.DependsOn(Clean).OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines).Inherit<ICanRestoreXamarin>(x => x.Restore);
 
     public Target Build => _ => _.DependsOn(Restore)
         .DependsOn(ModifyInfoPlist)
-        .Executes(() => MSBuild(
-            settings =>
+        .Executes(() =>
+            MSBuild(settings =>
                 settings
-                    .SetSolutionFile(((IHaveSolution) this).Solution)
                     .EnableRestore()
+                    .SetSolutionFile(((IHaveSolution) this).Solution)
                     .SetProperty("Platform", iOSTargetPlatform)
                     .SetConfiguration(Configuration)
                     .SetDefaultLoggers(((IHaveOutputLogs) this).LogsDirectory / "build.log")
@@ -72,18 +87,7 @@ partial class Versions : NukeBuild,
     public Target ArchiveIpa => _ => _
         .DependsOn(ModifyInfoPlist)
         .OnlyWhenStatic(() => EnvironmentInfo.Platform == PlatformFamily.OSX)
-        .Executes(() => MSBuild(settings =>
-            settings.SetSolutionFile(((IHaveSolution) this).Solution)
-                .EnableRestore()
-                .SetConfiguration(Configuration.Release)
-                .SetProperty("Platform", iOSTargetPlatform)
-                .SetProperty("BuildIpa", "true")
-                .SetProperty("ArchiveOnBuild", "true")
-                .SetConfiguration(Configuration)
-                .SetDefaultLoggers(((IHaveOutputLogs) this).LogsDirectory / "package.log")
-                .SetGitVersionEnvironment(GitVersion)
-                .SetAssemblyVersion(GitVersion?.AssemblySemVer)
-                .SetPackageVersion(GitVersion?.NuGetVersionV2)));
+        .Inherit<ICanArchiveiOS>(x => x.ArchiveIpa);
 
     public Target XamariniOS => _ => _
         .DependsOn(Clean)
@@ -93,9 +97,4 @@ partial class Versions : NukeBuild,
 
     public Target Default => _ => _
         .DependsOn(XamariniOS);
-
-    public Target BuildVersion => _ => _
-        .Before(Clean)
-        .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
-        .Inherit<IHaveBuildVersion>(x => x.BuildVersion);
 }

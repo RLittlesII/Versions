@@ -5,6 +5,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Versions.iOS", "src\Versions.iOS\Versions.iOS.csproj", "{8151B6E2-F484-451F-A5F4-5305A4E5DF40}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solution", ".solution", "{B150529C-A064-4225-82EA-CD697B1B867A}"
+	ProjectSection(SolutionItems) = preProject
+		directory.packages.props = directory.packages.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{89314866-6C89-4D45-AFA5-5E4D473F525C}"
 EndProject

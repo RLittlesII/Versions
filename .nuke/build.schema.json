@@ -26,6 +26,9 @@
           "type": "string",
           "description": "The directory where coverage artifacts are to be dropped"
         },
+        "EnableRestore": {
+          "type": "boolean"
+        },
         "Help": {
           "type": "boolean",
           "description": "Shows the help text for this build assembly"
@@ -69,9 +72,17 @@
             "type": "string"
           }
         },
+        "ProvisioningProfile": {
+          "type": "string",
+          "description": ""
+        },
         "Root": {
           "type": "string",
           "description": "Root directory during build execution"
+        },
+        "SigningCertificate": {
+          "type": "string",
+          "description": ""
         },
         "Skip": {
           "type": "array",

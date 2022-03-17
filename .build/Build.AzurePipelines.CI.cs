@@ -1,17 +1,33 @@
-using System.Collections.Generic;
-using System.Linq;
-using Azp;
-using JetBrains.Annotations;
+using Nuke.Common;
 using Nuke.Common.CI.AzurePipelines;
-using Nuke.Common.CI.AzurePipelines.Configuration;
-using Nuke.Common.Execution;
 
-[Azp.AzurePipelines(AzurePipelinesImage.MacOsLatest,
-    TriggerBranchesInclude = new[] { "main" },
-    InvokedTargets = new[] { nameof(Default) },
-    CacheKeyFiles = new string[] {},
-    CachePaths = new string[] {},
-    AutoGenerate = true)]
+// [AzurePipelines.AzurePipelines(AzurePipelinesImage.MacOsLatest,
+//     TriggerBranchesInclude = new[] { "main" },
+//     InvokedTargets = new[] { nameof(Default) },
+//     CacheKeyFiles = new string[] {},
+//     CachePaths = new string[] {},
+//     AppleSigningCertificate = "versions.p12",
+//     AppleProvisioningProfile = "",
+//     AutoGenerate = true)]
+[AzurePipelinesStepsAttribute(InvokeTargets = new[] { nameof(Default) },
+    Parameters = new[]
+    {
+        // nameof(IHaveAppleCertificate.SigningCertificate),
+        // nameof(IHaveAppleProvisioningProfile.ProvisioningProfile),
+        nameof(IHaveConfiguration.Configuration),
+        nameof(Verbosity)
+    },
+    AutoGenerate = false)]
 partial class Versions
 {
+}
+
+interface IHaveAppleCertificate
+{
+    public string SigningCertificate { get; }
+}
+
+interface IHaveAppleProvisioningProfile
+{
+    public string ProvisioningProfile { get; }
 }

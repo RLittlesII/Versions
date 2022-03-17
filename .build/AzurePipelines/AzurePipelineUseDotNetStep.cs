@@ -1,10 +1,8 @@
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using Nuke.Common.CI.AzurePipelines.Configuration;
 using Nuke.Common.Utilities;
-using Nuke.Common.Utilities.Collections;
 
-namespace Azp
+namespace AzurePipelines
 {
 
     [PublicAPI]
