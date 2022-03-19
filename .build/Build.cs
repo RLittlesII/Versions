@@ -33,7 +33,11 @@ partial class Versions : NukeBuild,
     ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
     ///   - Microsoft VSCode           https://nuke.build/vscode
     /// </summary>
-    public static int Main() => Execute<Versions>(x => x.Default);
+    public static int Main()
+    {
+        Logging.Level = LogLevel.Trace;
+        return Execute<Versions>(x => x.Default);
+    }
 
     public AbsolutePath InfoPlist { get; } = RootDirectory / "src" / "Versions.iOS" / "info.plist";
 
