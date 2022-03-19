@@ -4,6 +4,7 @@ using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MSBuild;
 using Rocket.Surgery.Nuke.Azp;
@@ -13,6 +14,9 @@ using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 
 [CheckBuildProjectConfigurations]
 [UnsetVisualStudioEnvironmentVariables]
+[DotNetVerbosityMapping]
+[MSBuildVerbosityMapping]
+[NuGetVerbosityMapping]
 partial class Versions : NukeBuild,
     ICanClean,
     ICanRestoreXamarin,
