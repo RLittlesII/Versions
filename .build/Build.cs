@@ -35,7 +35,7 @@ partial class Versions : NukeBuild,
     /// </summary>
     public static int Main()
     {
-        Logging.Level = LogLevel.Trace;
+        Verbosity = Verbosity.Verbose;
         return Execute<Versions>(x => x.Default);
     }
 
