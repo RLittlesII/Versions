@@ -1,5 +1,6 @@
 using Nuke.Common;
 using Nuke.Common.CI.AzurePipelines;
+using Rocket.Surgery.Nuke.Azp;
 
 // [AzurePipelines.AzurePipelines(AzurePipelinesImage.MacOsLatest,
 //     TriggerBranchesInclude = new[] { "main" },
@@ -9,7 +10,7 @@ using Nuke.Common.CI.AzurePipelines;
 //     AppleSigningCertificate = "versions.p12",
 //     AppleProvisioningProfile = "",
 //     AutoGenerate = true)]
-[AzurePipelinesStepsAttribute(InvokeTargets = new[] { nameof(Default) },
+[AzurePipelinesStepsAttribute(InvokeTargets = new[] { nameof(AzurePipelines) },
     Parameters = new[]
     {
         // nameof(IHaveAppleCertificate.SigningCertificate),
@@ -20,6 +21,11 @@ using Nuke.Common.CI.AzurePipelines;
     AutoGenerate = false)]
 partial class Versions
 {
+    Target AzurePipelines => _ => _
+        .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
+        .DependsOn(Homebrew)
+        .DependsOn(Fastlane)
+        .DependsOn(Default);
 }
 
 interface IHaveAppleCertificate

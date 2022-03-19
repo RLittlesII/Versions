@@ -3,6 +3,7 @@ using Nuke.Common.IO;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tooling;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MSBuild;
 using Rocket.Surgery.Nuke.Azp;
@@ -59,9 +60,13 @@ partial class Versions : NukeBuild,
         .DependsOn(BuildVersion)
         .Inherit<ICanClean>(x => x.Clean);
 
-    public Target Restore => _ => _.DependsOn(Clean).OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines).Inherit<ICanRestoreXamarin>(x => x.Restore);
+    public Target Restore => _ => _
+        .DependsOn(Clean)
+        .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
+        .Inherit<ICanRestoreXamarin>(x => x.Restore);
 
-    public Target Build => _ => _.DependsOn(Restore)
+    public Target Build => _ => _
+        .DependsOn(Restore)
         .DependsOn(ModifyInfoPlist)
         .Executes(() =>
             MSBuild(settings =>
@@ -80,6 +85,12 @@ partial class Versions : NukeBuild,
     public Target Pack => _ => _;
 
     public Target Test => _ => _;
+
+    public Target InstallCertificate => _ => _
+        .Executes(() =>
+        {
+            ProcessTasks.StartProcess("openssl", "--preview Mono");
+        });
 
     /// <summary>
     ///     packages a binary for distribution.
