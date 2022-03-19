@@ -63,13 +63,12 @@ partial class Versions : NukeBuild,
             () =>
             {
                 Log.Information(
-                    "Building version {NuGetVersion} of {SolutionName} ({Configuration}) using version {NukeVersion} of Nuke",
-                    GitVersion?.NuGetVersionV2 ?? GitVersion?.NuGetVersion,
+                    "Building version {FullSemVer} of {SolutionName} ({Configuration}) using version {NukeVersion} of Nuke",
+                    GitVersion.FullSemVer.Replace('+', '.'),
                     ((IHaveSolution) this).Solution.Name,
                     Configuration,
                     typeof(NukeBuild).Assembly.GetVersionText()
                 );
-                Log.Information("GitVersion: {@GitVersion}", GitVersion);
             });
 
     public Target Clean => _ => _
