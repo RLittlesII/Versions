@@ -7,6 +7,7 @@ using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MSBuild;
+using Nuke.Common.Utilities;
 using Rocket.Surgery.Nuke.Azp;
 using Rocket.Surgery.Nuke.Xamarin;
 using Serilog;
@@ -58,7 +59,18 @@ partial class Versions : NukeBuild,
     public Target BuildVersion => _ => _
         .Before(Clean)
         .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
-        .Inherit<IHaveBuildVersion>(x => x.BuildVersion);
+        .Executes(
+            () =>
+            {
+                Log.Information(
+                    "Building version {NuGetVersion} of {SolutionName} ({Configuration}) using version {NukeVersion} of Nuke",
+                    GitVersion?.NuGetVersionV2 ?? GitVersion?.NuGetVersion,
+                    ((IHaveSolution) this).Solution.Name,
+                    Configuration,
+                    typeof(NukeBuild).Assembly.GetVersionText()
+                );
+                Log.Information("GitVersion: {@GitVersion}", GitVersion);
+            });
 
     public Target Clean => _ => _
         .DependsOn(BuildVersion)
