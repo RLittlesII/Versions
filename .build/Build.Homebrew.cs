@@ -16,6 +16,6 @@ partial class Versions
             // ProcessTasks.StartShell(
             //     "mkdir homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew");
             ProcessTasks.StartShell(
-                "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)", logOutput: true);
+                "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)", logInvocation: true, logOutput: true);
         });
 }

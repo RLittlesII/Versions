@@ -16,7 +16,7 @@ partial class Versions
         .DependsOn(InstallHomebrew)
         .Executes(() =>
         {
-            ProcessTasks.StartProcess("brew install", "fastlane", logOutput: true);
+            ProcessTasks.StartProcess("brew", "install fastlane", logInvocation: true, logOutput: true);
         });
 
     Target FastlaneMatch => _ => _
@@ -27,6 +27,6 @@ partial class Versions
         .Before(ArchiveIpa)
         .Executes(() =>
         {
-            ProcessTasks.StartProcess("fastlane","match", logOutput: true);
+            ProcessTasks.StartProcess("fastlane","match", logInvocation: true, logOutput: true);
         });
 }
