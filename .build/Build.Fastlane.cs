@@ -7,13 +7,11 @@ partial class Versions
 {
     Target Fastlane => _ => _
         .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
-        .DependsOn(Homebrew)
         .DependsOn(InstallFastlane)
         .DependsOn(FastlaneMatch);
 
     Target InstallFastlane => _ => _
         .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
-        .DependsOn(InstallHomebrew)
         .Executes(() =>
         {
             ProcessTasks.StartProcess("brew", "install fastlane", logInvocation: true, logOutput: true);

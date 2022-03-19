@@ -23,7 +23,6 @@ partial class Versions
 {
     Target AzurePipelines => _ => _
         .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
-        .DependsOn(Homebrew)
         .DependsOn(Fastlane)
         .DependsOn(Default);
 }
