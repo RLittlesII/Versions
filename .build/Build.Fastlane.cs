@@ -10,12 +10,12 @@ partial class Versions
         .DependsOn(FastlaneMatch);
 
     Target InstallFastlane => _ => _
-        .Executes(() => ProcessTasks.StartShell("gem", "install fastlane"));
+        .Executes(() => ProcessTasks.StartShell("gem install fastlane"));
 
     Target FastlaneMatch => _ => _
         .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
         .DependsOn(InstallFastlane)
         .DependentFor(ArchiveIpa)
         .Before(ModifyInfoPlist)
-        .Executes(() => ProcessTasks.StartShell("fastlane","match --verbose", logInvocation: true, logOutput: true));
+        .Executes(() => ProcessTasks.StartShell("fastlane match --verbose", logInvocation: true, logOutput: true));
 }
