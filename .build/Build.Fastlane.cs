@@ -17,5 +17,5 @@ partial class Versions
         .DependsOn(InstallFastlane)
         .DependentFor(ArchiveIpa)
         .Before(ModifyInfoPlist)
-        .Executes(() => ProcessTasks.StartProcess("fastlane", "match --verbose", logInvocation: true, logOutput: true));
+        .Executes(() => ProcessTasks.StartProcess("fastlane", "match development --verbose", logInvocation: true, logOutput: true));
 }
