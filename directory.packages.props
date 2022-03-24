@@ -35,8 +35,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
     <PackageVersion Include="ReactiveUI.XamForms" Version="17.1.50" />
+    <PackageVersion Include="Serilog.Sinks.AppCenter.Crash" Version="1.2.1" />
     <PackageVersion Include="Splat.Microsoft.Extensions.Logging" Version="14.1.45" />
     <PackageVersion Include="Splat.Microsoft.Extensions.DependencyInjection" Version="14.1.45" />
+    <PackageVersion Include="Splat.Serilog" Version="13.1.63" />
     <PackageVersion Include="Xamarin.Forms" Version="5.0.0.2337"/>
   </ItemGroup>
 

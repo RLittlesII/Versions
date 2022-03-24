@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Versions"
-             x:Class="Versions.MainPage">
+<xamForms:ReactiveContentPage x:TypeArguments="local:MainViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                              xmlns:local="clr-namespace:Versions"
+                              xmlns:xamForms="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                              x:Class="Versions.MainPage">
 
     <StackLayout>
         <!-- Place new controls here -->
@@ -11,4 +12,4 @@
            VerticalOptions="CenterAndExpand" />
     </StackLayout>
 
-</ContentPage>
+</xamForms:ReactiveContentPage>
