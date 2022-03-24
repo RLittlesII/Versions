@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using ReactiveMarbles.Locator;
 using ReactiveMarbles.Mvvm;
 using ReactiveUI;
@@ -9,6 +10,9 @@ using Splat.Microsoft.Extensions.Logging;
 
 namespace Versions.Startup
 {
+    /// <summary>
+    /// Extensions methods for <see cref="Microsoft.Extensions.DependencyInjection"/>.
+    /// </summary>
     public static class MicrosoftDependencyInjectionExtensions
     {
         /// <summary>
@@ -27,7 +31,11 @@ namespace Versions.Startup
             return serviceCollection;
         }
 
-
+        /// <summary>
+        /// Adds Reactive Marbles to the <see cref="IServiceCollection"/>.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <returns>The service collection with ReactiveUI dependencies registered.</returns>
         public static IServiceCollection AddMarbles(this IServiceCollection serviceCollection)
         {
             var coreRegistration = CoreRegistrationBuilder
@@ -40,9 +48,14 @@ namespace Versions.Startup
                 .Current()
                 .AddCoreRegistrations(() => coreRegistration);
 
-            return serviceCollection.AddSingleton<ICoreRegistration>(_ => coreRegistration);
+            return serviceCollection.AddSingleton(_ => coreRegistration);
         }
 
+        /// <summary>
+        /// Adds ReactiveUI to the <see cref="IServiceCollection"/>.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <returns>The service collection with ReactiveUI dependencies registered.</returns>
         public static IServiceCollection AddReactiveUI(this IServiceCollection serviceCollection)
         {
             Locator.CurrentMutable.InitializeReactiveUI(RegistrationNamespace.XamForms);
@@ -50,7 +63,11 @@ namespace Versions.Startup
             return serviceCollection;
         }
 
-
+        /// <summary>
+        /// Sets the <see cref="Locator"/> as the pass through for the service collection.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <returns>The service collection with the locator dependencies registered.</returns>
         public static IServiceCollection UseServiceProviderAsLocator(this IServiceCollection serviceCollection)
         {
             serviceCollection.UseMicrosoftDependencyResolver();
@@ -58,7 +75,14 @@ namespace Versions.Startup
             return serviceCollection;
         }
 
-        public static IServiceCollection ConfigureOptions<T>(this IServiceCollection serviceCollection) where T : class
+        /// <summary>
+        /// Configures the <see cref="IOptions{TOptions}"/> for the service collection.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <typeparam name="T">The option type.</typeparam>
+        /// <returns>The service collection with options registered.</returns>
+        public static IServiceCollection ConfigureOptions<T>(this IServiceCollection serviceCollection)
+            where T : class
         {
             serviceCollection
                 .AddOptions<T>()
@@ -67,6 +91,12 @@ namespace Versions.Startup
             return serviceCollection;
         }
 
+        /// <summary>
+        /// Configures the app settings for the service collection.
+        /// </summary>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns>The service collection with ReactiveUI dependencies registered.</returns>
         public static IServiceCollection ConfigureAppSettings(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
             var builder = new ConfigurationBuilder()
@@ -81,9 +111,9 @@ namespace Versions.Startup
         /// <summary>
         /// Adds the <see cref="IPlatformInitializer"/> to the <see cref="IServiceCollection"/>.
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        /// <param name="platformInitializer"></param>
-        /// <returns></returns>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <param name="platformInitializer">The platform initializer.</param>
+        /// <returns>The service collection with platform dependencies registered.</returns>
         public static IServiceCollection AddPlatform(this IServiceCollection serviceCollection, IPlatformInitializer platformInitializer) => platformInitializer.Initialize(serviceCollection);
     }
 }

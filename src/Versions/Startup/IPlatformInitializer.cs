@@ -8,10 +8,10 @@ namespace Versions.Startup
     public interface IPlatformInitializer
     {
         /// <summary>
-        /// Initialized the platform.
+        /// Initialize the platform.
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        /// <returns></returns>
+        /// <param name="serviceCollection">The service collection.</param>
+        /// <returns>The service collection with platform dependencies registered.</returns>
         public IServiceCollection Initialize(IServiceCollection serviceCollection);
     }
 }

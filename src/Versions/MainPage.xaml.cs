@@ -2,11 +2,14 @@
 
 namespace Versions
 {
-    public partial class MainPage : ContentPage
+    /// <summary>
+    /// The main page.
+    /// </summary>
+    public partial class MainPage
     {
-        public MainPage()
-        {
-            InitializeComponent();
-        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainPage"/> class.
+        /// </summary>
+        public MainPage() => InitializeComponent();
     }
 }

@@ -1,12 +1,20 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using UIKit;
 
+[assembly: SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Main iOS application")]
 namespace Versions.iOS
 {
+    /// <summary>
+    /// iOS application.
+    /// </summary>
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global", Justification = "This is just iOS")]
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "Main iOS application")]
+    [SuppressMessage("Design", "RCS1102:Make class static.", Justification = "Main iOS application")]
     public class Application
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             AppDomain.CurrentDomain.UnhandledException += HandledUnhandledException;
             TaskScheduler.UnobservedTaskException += TaskSchedulerOnUnobservedTaskException;
