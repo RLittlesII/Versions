@@ -1,5 +1,8 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using Sextant;
+using Sextant.Plugins.Popup;
+using Sextant.XamForms;
 using Versions.Configuration;
 using Xamarin.Forms;
 
@@ -24,10 +27,20 @@ namespace Versions.Startup
                 .ConfigureOptions<AppSettings>()
                 .AddMarbles()
                 .AddReactiveUI()
+                .AddSextant()
+                .AddSerilog()
                 .UseServiceProviderAsLocator()
+                .RegisterForNavigation<MainPage, MainViewModel>()
                 .BuildServiceProvider();
 
         /// <inheritdoc />
-        public Page NavigateToStart<T>() => new MainPage();
+        public Page NavigateToStart<T>()
+            where T : IViewModel
+        {
+            var serviceProvider = ConfigureServices(new ServiceCollection());
+            serviceProvider.GetService<IPopupViewStackService>() !
+                .PushPage<T>(null, false, false).Subscribe();
+            return ((Page)serviceProvider.GetService<IView>() ! as NavigationView) !;
+        }
     }
 }

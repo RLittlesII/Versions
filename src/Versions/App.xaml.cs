@@ -19,7 +19,7 @@ namespace Versions
 
             var startup = new VersionsStartup(initializer);
 
-            MainPage = new MainPage();
+            MainPage = startup.NavigateToStart<MainViewModel>();
         }
 
         /// <inheritdoc />

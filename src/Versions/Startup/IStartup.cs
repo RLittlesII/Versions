@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using Sextant;
 using Xamarin.Forms;
 
 namespace Versions.Startup
@@ -21,6 +22,7 @@ namespace Versions.Startup
         /// </summary>
         /// <typeparam name="T">The view model.</typeparam>
         /// <returns>The start page.</returns>
-        Page NavigateToStart<T>();
+        Page NavigateToStart<T>()
+            where T : IViewModel;
     }
 }

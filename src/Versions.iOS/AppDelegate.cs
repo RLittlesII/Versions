@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Foundation;
 using Microsoft.Extensions.Configuration;
+using Rg.Plugins.Popup.Services;
+using Splat;
 using UIKit;
 
 namespace Versions.iOS
@@ -23,8 +25,11 @@ namespace Versions.iOS
         /// <inheritdoc/>
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            PreFormsInit();
+
             global::Xamarin.Forms.Forms.Init();
 
+            PostFormsInit();
             var initializer =
                 new iOSInitializer(new ConfigurationBuilder()
                     .AddJsonFile("ios.appsettings.json")
@@ -34,6 +39,16 @@ namespace Versions.iOS
             LoadApplication(new App(initializer));
 
             return base.FinishedLaunching(app, options);
+        }
+
+        private static void PreFormsInit()
+        {
+            Rg.Plugins.Popup.Popup.Init();
+        }
+
+        private static void PostFormsInit()
+        {
+            Locator.CurrentMutable.RegisterLazySingleton(() => PopupNavigation.Instance);
         }
     }
 }

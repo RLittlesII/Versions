@@ -36,6 +36,9 @@
     </PackageVersion>
     <PackageVersion Include="ReactiveUI.XamForms" Version="17.1.50" />
     <PackageVersion Include="Serilog.Sinks.AppCenter.Crash" Version="1.2.1" />
+    <PackageVersion Include="Serilog.Sinks.Xamarin" Version="0.2.0.64" />
+    <PackageVersion Include="Sextant.Plugins.Popup" Version="2.11.1" />
+    <PackageVersion Include="Sextant.XamForms" Version="2.11.1" />
     <PackageVersion Include="Splat.Microsoft.Extensions.Logging" Version="14.1.45" />
     <PackageVersion Include="Splat.Microsoft.Extensions.DependencyInjection" Version="14.1.45" />
     <PackageVersion Include="Splat.Serilog" Version="13.1.63" />

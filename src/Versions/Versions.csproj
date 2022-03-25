@@ -20,6 +20,8 @@
         </PackageReference>
         <PackageReference Include="ReactiveUI.XamForms" />
         <PackageReference Include="Serilog.Sinks.AppCenter.Crash" />
+        <PackageReference Include="Sextant.Plugins.Popup" />
+        <PackageReference Include="Sextant.XamForms" />
         <PackageReference Include="Splat.Microsoft.Extensions.Logging" />
         <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" />
         <PackageReference Include="Splat.Serilog" />
