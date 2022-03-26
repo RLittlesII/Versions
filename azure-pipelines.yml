@@ -1,4 +1,5 @@
 trigger:
+
   branches:
     include:
       - main
@@ -17,6 +18,11 @@ stages:
             inputs:
               packageType: sdk
               version: 6.0.x
+          - task: FileTransform@1
+            inputs:
+              folderPath: '$(System.DefaultWorkingDirectory)'
+              fileType: 'json'
+              targetFiles: 'appsettings.json'
           - task: DotNetCoreCLI@2
             inputs:
               command: 'custom'
