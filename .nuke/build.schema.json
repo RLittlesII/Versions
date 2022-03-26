@@ -14,6 +14,8 @@
           "type": "string",
           "description": "Configuration to build",
           "enum": [
+            "AdHoc",
+            "AppStore",
             "Debug",
             "Release"
           ]
@@ -53,6 +55,9 @@
             "VSCode"
           ]
         },
+        "IdentifierSuffix": {
+          "type": "string"
+        },
         "NoLogo": {
           "type": "boolean",
           "description": "Disables displaying the NUKE logo"
@@ -72,17 +77,9 @@
             "type": "string"
           }
         },
-        "ProvisioningProfile": {
-          "type": "string",
-          "description": ""
-        },
         "Root": {
           "type": "string",
           "description": "Root directory during build execution"
-        },
-        "SigningCertificate": {
-          "type": "string",
-          "description": ""
         },
         "Skip": {
           "type": "array",

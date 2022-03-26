@@ -133,6 +133,7 @@
         <Reference Include="Xamarin.iOS" />
     </ItemGroup>
     <ItemGroup>
+        <PackageReference Include="Serilog.Sinks.Xamarin" />
         <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" />
         <PackageReference Include="Xamarin.Forms" />
     </ItemGroup>

@@ -10,7 +10,7 @@ output_path("./provision/ios")
 
 force_for_new_devices(true)
 
-readonly(false)
+readonly(true)
 # For all available options run `fastlane match --help`
 # Remove the # in the beginning of the line to enable the other options
 

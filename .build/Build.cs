@@ -40,21 +40,21 @@ partial class Versions : NukeBuild,
 
     public string BaseBundleIdentifier { get; } = "com.companyname.versions";
 
-    public TargetPlatform iOSTargetPlatform { get; } = TargetPlatform.iPhoneSimulator;
+    public TargetPlatform iOSTargetPlatform { get; } = TargetPlatform.iPhone;
 
     [Parameter("Configuration to build")]
-    public Configuration Configuration { get; } = IsLocalBuild ? Configuration.Debug : Configuration.Release;
+    public Configuration Configuration { get; } = Configuration.AdHoc;
 
-    [Parameter("")] public string SigningCertificate { get; } = "";
+    [Parameter] public string IdentifierSuffix { get; } = string.Empty;
 
-    [Parameter("")] public string ProvisioningProfile { get; } = "";
+    [OptionalGitRepository]
+    public GitRepository? GitRepository { get; }
 
+    [ComputedGitVersion]
+    public GitVersion GitVersion { get; } = null!;
 
-    [OptionalGitRepository] public GitRepository? GitRepository { get; }
-
-    [ComputedGitVersion] public GitVersion GitVersion { get; } = null!;
-
-    [Parameter] public bool EnableRestore { get; } = AzurePipelinesTasks.IsRunningOnAzurePipelines.Compile().Invoke();
+    [Parameter]
+    public bool EnableRestore { get; } = AzurePipelinesTasks.IsRunningOnAzurePipelines.Compile().Invoke();
 
     public Target BuildVersion => _ => _
         .Before(Clean)
@@ -63,9 +63,9 @@ partial class Versions : NukeBuild,
             () =>
             {
                 Log.Information(
-                    "Building version {FullSemVer} of {SolutionName} ({Configuration}) using version {NukeVersion} of Nuke",
-                    GitVersion.FullSemVer.Replace('+', '.'),
-                    ((IHaveSolution) this).Solution.Name,
+                    "Building version {FullSemVer} of {SolutionName} ({@Configuration}) using version {NukeVersion} of Nuke",
+                    GitVersion.FullSemanticVersion(),
+                    ((IHaveSolution)this).Solution.Name,
                     Configuration,
                     typeof(NukeBuild).Assembly.GetVersionText()
                 );
@@ -92,10 +92,28 @@ partial class Versions : NukeBuild,
                     .SetConfiguration(Configuration)
                     .SetDefaultLoggers(((IHaveOutputLogs) this).LogsDirectory / "build.log")
                     .SetGitVersionEnvironment(GitVersion)
-                    .SetAssemblyVersion(GitVersion?.AssemblySemVer)
+                    .SetAssemblyVersion(GitVersion.FullSemanticVersion())
                     .SetPackageVersion(GitVersion?.NuGetVersionV2)));
 
-    public Target ModifyInfoPlist => _ => _.Inherit<ICanBuildXamariniOS>(x => x.ModifyInfoPlist);
+    public Target ModifyInfoPlist => _ => _
+        .Executes(
+            () =>
+            {
+                Serilog.Log.Verbose("Info.plist Path: {InfoPlist}", InfoPlist);
+                var plist = Plist.Deserialize(InfoPlist);
+
+                plist["CFBundleIdentifier"] = $"{BaseBundleIdentifier}.{IdentifierSuffix.ToLower()}".TrimEnd('.');
+                Serilog.Log.Information("CFBundleIdentifier: {CFBundleIdentifier}", plist["CFBundleIdentifier"]);
+
+                plist["CFBundleShortVersionString"] = $"{GitVersion?.Major}.{GitVersion?.Minor}.{GitVersion?.Patch}";
+                Serilog.Log.Information("CFBundleShortVersionString: {CFBundleShortVersionString}",
+                    plist["CFBundleShortVersionString"]);
+
+                plist["CFBundleVersion"] = $"{GitVersion?.FullSemanticVersion()}";
+                Serilog.Log.Information("CFBundleVersion: {CFBundleVersion}", plist["CFBundleVersion"]);
+
+                Plist.Serialize(InfoPlist, plist);
+            });
 
     public Target Pack => _ => _;
 
@@ -113,7 +131,21 @@ partial class Versions : NukeBuild,
     public Target ArchiveIpa => _ => _
         .DependsOn(ModifyInfoPlist)
         .OnlyWhenStatic(() => EnvironmentInfo.Platform == PlatformFamily.OSX)
-        .Inherit<ICanArchiveiOS>(x => x.ArchiveIpa);
+        .Executes(
+            () =>
+                MSBuild(
+                    settings =>
+                        settings.SetSolutionFile(((IHaveSolution)this).Solution)
+                            .SetRestore(EnableRestore)
+                            .SetProperty("Platform", iOSTargetPlatform)
+                            .SetProperty("BuildIpa", "true")
+                            .SetProperty("ArchiveOnBuild", "true")
+                            .SetProperty("IpaPackageDir", ((IHaveArtifacts)this).ArtifactsDirectory / "ios")
+                            .SetConfiguration(Configuration)
+                            .SetDefaultLoggers(((IHaveOutputLogs)this).LogsDirectory / "package.log")
+                            .SetGitVersionEnvironment(GitVersion)
+                            .SetAssemblyVersion(GitVersion?.FullSemVer)
+                            .SetPackageVersion(GitVersion?.NuGetVersionV2)));
 
     public Target XamariniOS => _ => _
         .DependsOn(Clean)

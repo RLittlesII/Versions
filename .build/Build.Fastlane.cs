@@ -16,5 +16,9 @@ partial class Versions
         .After(ModifyInfoPlist)
         .DependsOn(InstallFastlane)
         .DependentFor(ArchiveIpa)
-        .Executes(() => ProcessTasks.StartProcess("fastlane", "match development --verbose", logInvocation: true, logOutput: true));
+        .Executes(() =>
+        {
+            var env = IsLocalBuild ? "development" : "adhoc";
+            return ProcessTasks.StartProcess("fastlane", $"match adhoc --verbose", logInvocation: true, logOutput: true);
+        });
 }
