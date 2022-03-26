@@ -10,13 +10,15 @@ using Rocket.Surgery.Nuke.Azp;
 //     AppleSigningCertificate = "versions.p12",
 //     AppleProvisioningProfile = "",
 //     AutoGenerate = true)]
-[AzurePipelinesStepsAttribute(InvokeTargets = new[] { nameof(AzurePipelines) },
+[AzurePipelinesStepsAttribute(
+    InvokeTargets = new[]
+    {
+        nameof(AzurePipelines),
+    },
     Parameters = new[]
     {
-        // nameof(IHaveAppleCertificate.SigningCertificate),
-        // nameof(IHaveAppleProvisioningProfile.ProvisioningProfile),
         nameof(IHaveConfiguration.Configuration),
-        nameof(Verbosity)
+        nameof(Verbosity),
     },
     AutoGenerate = false)]
 partial class Versions

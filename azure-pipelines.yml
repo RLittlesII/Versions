@@ -22,7 +22,7 @@ stages:
             inputs:
               folderPath: '$(System.DefaultWorkingDirectory)'
               fileType: 'json'
-              targetFiles: 'appsettings.json'
+              targetFiles: 'src/Versions/appsettings.json'
           - task: DotNetCoreCLI@2
             inputs:
               command: 'custom'
