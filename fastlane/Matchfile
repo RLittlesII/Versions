@@ -1,5 +1,6 @@
+storage_mode("git")
 git_url("https://dev.azure.com/rlittlesii/github/_git/fastlane")
-
+git_branch("main")
 storage_mode("git")
 
 type("development", "adhoc", "appstore") # The default type, can be: appstore, adhoc, enterprise or development

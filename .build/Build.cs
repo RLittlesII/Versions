@@ -42,19 +42,15 @@ partial class Versions : NukeBuild,
 
     public TargetPlatform iOSTargetPlatform { get; } = TargetPlatform.iPhone;
 
-    [Parameter("Configuration to build")]
-    public Configuration Configuration { get; } = Configuration.AdHoc;
+    [Parameter("Configuration to build")] public Configuration Configuration { get; } = Configuration.AdHoc;
 
-    [Parameter] public string IdentifierSuffix { get; } = string.Empty;
+    [Parameter] public string IdentifierSuffix { get; } = "test";
 
-    [OptionalGitRepository]
-    public GitRepository? GitRepository { get; }
+    [OptionalGitRepository] public GitRepository? GitRepository { get; }
 
-    [ComputedGitVersion]
-    public GitVersion GitVersion { get; } = null!;
+    [ComputedGitVersion] public GitVersion GitVersion { get; } = null!;
 
-    [Parameter]
-    public bool EnableRestore { get; } = AzurePipelinesTasks.IsRunningOnAzurePipelines.Compile().Invoke();
+    [Parameter] public bool EnableRestore { get; } = AzurePipelinesTasks.IsRunningOnAzurePipelines.Compile().Invoke();
 
     public Target BuildVersion => _ => _
         .Before(Clean)
@@ -65,7 +61,7 @@ partial class Versions : NukeBuild,
                 Log.Information(
                     "Building version {FullSemVer} of {SolutionName} ({@Configuration}) using version {NukeVersion} of Nuke",
                     GitVersion.FullSemanticVersion(),
-                    ((IHaveSolution)this).Solution.Name,
+                    ((IHaveSolution) this).Solution.Name,
                     Configuration,
                     typeof(NukeBuild).Assembly.GetVersionText()
                 );
@@ -102,16 +98,20 @@ partial class Versions : NukeBuild,
                 Serilog.Log.Verbose("Info.plist Path: {InfoPlist}", InfoPlist);
                 var plist = Plist.Deserialize(InfoPlist);
 
+                Log.Verbose("PList {@Plist}", plist);
+
                 plist["CFBundleIdentifier"] = $"{BaseBundleIdentifier}.{IdentifierSuffix.ToLower()}".TrimEnd('.');
                 Serilog.Log.Information("CFBundleIdentifier: {CFBundleIdentifier}", plist["CFBundleIdentifier"]);
 
                 plist["CFBundleShortVersionString"] = $"{GitVersion?.Major}.{GitVersion?.Minor}.{GitVersion?.Patch}";
-                Serilog.Log.Information("CFBundleShortVersionString: {CFBundleShortVersionString}",
+                Serilog.Log.Information(
+                    "CFBundleShortVersionString: {CFBundleShortVersionString}",
                     plist["CFBundleShortVersionString"]);
 
                 plist["CFBundleVersion"] = $"{GitVersion?.FullSemanticVersion()}";
                 Serilog.Log.Information("CFBundleVersion: {CFBundleVersion}", plist["CFBundleVersion"]);
 
+                Log.Verbose("PList {@Plist}", plist);
                 Plist.Serialize(InfoPlist, plist);
             });
 
@@ -135,7 +135,7 @@ partial class Versions : NukeBuild,
             () =>
                 MSBuild(
                     settings =>
-                        settings.SetSolutionFile(((IHaveSolution)this).Solution)
+                        settings.SetSolutionFile(((IHaveSolution) this).Solution)
                             .SetRestore(EnableRestore)
                             .SetProperty("Platform", iOSTargetPlatform)
                             .SetProperty("BuildIpa", "true")
@@ -144,8 +144,8 @@ partial class Versions : NukeBuild,
                             .SetConfiguration(Configuration)
                             .SetDefaultLoggers(((IHaveOutputLogs)this).LogsDirectory / "package.log")
                             .SetGitVersionEnvironment(GitVersion)
-                            .SetAssemblyVersion(GitVersion?.FullSemVer)
-                            .SetPackageVersion(GitVersion?.NuGetVersionV2)));
+                            .SetAssemblyVersion(GitVersion.FullSemanticVersion())
+                            .SetPackageVersion(GitVersion.FullSemanticVersion())));
 
     public Target XamariniOS => _ => _
         .DependsOn(Clean)

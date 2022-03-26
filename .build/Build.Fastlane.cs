@@ -3,7 +3,7 @@ using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Rocket.Surgery.Nuke.Azp;
 
-partial class Versions
+internal partial class Versions
 {
     Target Fastlane => _ => _
         .DependsOn(FastlaneMatch);
@@ -19,6 +19,6 @@ partial class Versions
         .Executes(() =>
         {
             var env = IsLocalBuild ? "development" : "adhoc";
-            return ProcessTasks.StartProcess("fastlane", $"match adhoc --verbose", logInvocation: true, logOutput: true);
+            return ProcessTasks.StartProcess("fastlane", $"match adhoc", logInvocation: true, logOutput: true);
         });
 }
