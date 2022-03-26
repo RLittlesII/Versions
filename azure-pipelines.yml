@@ -23,3 +23,8 @@ stages:
               custom: 'tool'
               arguments: 'install --global nuke.globaltool'
           - template: ./azure-pipelines.nuke.yml
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'drop'
+              publishLocation: 'Container'
