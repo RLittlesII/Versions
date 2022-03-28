@@ -20,7 +20,7 @@ platform :ios do
   lane :ci do |options|    
     match(type: "adhoc",
           team_id: "A874DYSH5P",
-          app_identifier: "['com.company.versions','com.company.versions.dev']",
+          app_identifier: "com.company.versions",
           storage_mode: "s3",
           s3_bucket: "versions.provision",
           s3_region:ENV['MATCH_S3_REGION'],
