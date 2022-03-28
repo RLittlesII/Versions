@@ -1,24 +1,34 @@
+using System.Diagnostics.CodeAnalysis;
 using Nuke.Common;
+using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Rocket.Surgery.Nuke.Azp;
 
+/// <summary>
+/// Represents the Azure Pipeline portion of the build.
+/// </summary>
 [AzurePipelinesSecretStepsAttribute(
     InvokeTargets = new[] { nameof(AzurePipelines) },
     Parameters = new[] { nameof(IHaveConfiguration.Configuration), nameof(Verbosity) },
     Secrets = new[] { nameof(BucketAccessKey), nameof(BucketSecretAccessKey) },
     AutoGenerate = false)]
-partial class Versions
+internal partial class Versions
 {
-    Target AzurePipelines => _ => _
+    /// <summary>
+    /// Gets azure Pipelines target.
+    /// </summary>
+    private Target AzurePipelines => _ => _
         .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
         .DependsOn(Clean)
         .DependsOn(Restore)
         .DependsOn(ModifyInfoPlist)
         .DependsOn(SetupKeychain)
         .DependsOn(Fastlane)
-        .DependsOn(ArchiveIpa);
+        .DependsOn(ArchiveIpa)
+        .DependsOn(CopyIpa);
 
-    Target SetupKeychain => _ => _
+    private Target SetupKeychain => _ => _
+        .DependsOn(ModifyInfoPlist)
         .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
         .Executes(() =>
         {
@@ -28,4 +38,10 @@ partial class Versions
             var findKeychain = ProcessTasks.StartProcess("security", "find-identity -v -p codesigning temporary.keychain", logInvocation: true, logOutput: true).AssertZeroExitCode().WaitForExit();
             return new[] { createKeychain, listKeychain, unlockKeychain, findKeychain };
         });
+
+    private Target CopyIpa => _ => _
+        .DependsOn(ArchiveIpa)
+        .Executes(() => FileSystemTasks.CopyFileToDirectory(
+            ((IHaveArtifacts) this).ArtifactsDirectory / "ios" / "Versions.iOS.ipa",
+            "$(build.artifactstagingdirectory)"));
 }
