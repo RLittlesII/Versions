@@ -62,28 +62,7 @@ internal partial class Versions : NukeBuild,
     /// <inheritdoc/>
     public Target ModifyInfoPlist => _ => _
         .DependsOn(Restore)
-        .Executes(
-            () =>
-            {
-                Serilog.Log.Verbose("Info.plist Path: {InfoPlist}", InfoPlist);
-                var plist = Plist.Deserialize(InfoPlist);
-
-                Log.Verbose("PList {@Plist}", plist);
-
-                plist["CFBundleIdentifier"] = $"{BaseBundleIdentifier}.{IdentifierSuffix.ToLower()}".TrimEnd('.');
-                Serilog.Log.Information("CFBundleIdentifier: {CFBundleIdentifier}", plist["CFBundleIdentifier"]);
-
-                plist["CFBundleShortVersionString"] = $"{GitVersion?.Major}.{GitVersion?.Minor}.{GitVersion?.Patch}";
-                Serilog.Log.Information(
-                    "CFBundleShortVersionString: {CFBundleShortVersionString}",
-                    plist["CFBundleShortVersionString"]);
-
-                plist["CFBundleVersion"] = $"{GitVersion?.FullSemanticVersion()}";
-                Serilog.Log.Information("CFBundleVersion: {CFBundleVersion}", plist["CFBundleVersion"]);
-
-                Log.Verbose("PList {@Plist}", plist);
-                Plist.Serialize(InfoPlist, plist);
-            });
+        .Inherit<IXamarinAppleTarget>(x => x.ModifyInfoPlist);
 
     /// <inheritdoc/>
     public Target Pack => _ => _;
@@ -96,21 +75,7 @@ internal partial class Versions : NukeBuild,
         .DependsOn(Restore)
         .DependsOn(ModifyInfoPlist)
         .OnlyWhenStatic(() => EnvironmentInfo.Platform == PlatformFamily.OSX)
-        .Executes(
-            () =>
-                MSBuild(
-                    settings =>
-                        settings.SetSolutionFile(((IHaveSolution) this).Solution)
-                            .SetRestore(EnableRestore)
-                            .SetProperty("Platform", iOSTargetPlatform)
-                            .SetProperty("BuildIpa", "true")
-                            .SetProperty("ArchiveOnBuild", "true")
-                            .SetProperty("IpaPackageDir", ((IHaveArtifacts)this).ArtifactsDirectory / "ios")
-                            .SetConfiguration(Configuration)
-                            .SetDefaultLoggers(((IHaveOutputLogs) this).LogsDirectory / "package.log")
-                            .SetGitVersionEnvironment(GitVersion)
-                            .SetAssemblyVersion(GitVersion.FullSemanticVersion())
-                            .SetPackageVersion(GitVersion.FullSemanticVersion())))
+        .Inherit<ICanArchiveiOS>(x => x.ArchiveIpa)
         .Produces(((IHaveArtifacts)this).ArtifactsDirectory / "ios");
 
     /// <summary>
@@ -127,7 +92,7 @@ internal partial class Versions : NukeBuild,
     /// Gets the default execution path.
     /// </summary>
     public Target Default => _ => _
-        .DependsOn(XamariniOS);
+        .DependsOn(Build);
 
     /// <summary>
     /// Support plugins are available for:

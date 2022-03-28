@@ -66,8 +66,9 @@
             "VSCode"
           ]
         },
-        "IdentifierSuffix": {
-          "type": "string"
+        "Ipa": {
+          "type": "string",
+          "description": "The directory where artifacts are to be dropped"
         },
         "NoLogo": {
           "type": "boolean",

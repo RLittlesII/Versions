@@ -19,14 +19,14 @@ internal partial class Versions
     public AbsolutePath InfoPlist { get; } = RootDirectory / "src" / "Versions.iOS" / "info.plist";
 
     /// <inheritdoc/>
-    public string BaseBundleIdentifier { get; } = "com.company.versions";
+    public string BundleIdentifier { get; } = "com.company.versions";
 
     /// <inheritdoc/>
     public TargetPlatform iOSTargetPlatform { get; } = TargetPlatform.iPhone;
 
     [Parameter("Configuration to build")] public Configuration Configuration { get; } = Configuration.Release;
 
-    [Parameter] public string IdentifierSuffix { get; } = string.Empty;
+    public string Suffix { get; set; } = string.Empty;
 
     /// <inheritdoc/>
     [Parameter] public bool EnableRestore { get; } = AzurePipelinesTasks.IsRunningOnAzurePipelines.Compile().Invoke();
