@@ -30,6 +30,10 @@ steps:
     displayName: 'ModifyInfoPlist'
   - pwsh: nuke FastlaneMatch --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'FastlaneMatch'
+    env:
+      MATCH_S3_ACCESS_KEY: $(MATCH_S3_ACCESS_KEY)
+      MATCH_S3_REGION: $(MATCH_S3_REGION)
+      MATCH_S3_SECRET_ACCESS_KEY: $(MATCH_S3_SECRET_ACCESS_KEY)
   - pwsh: nuke ArchiveIpa --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'ArchiveIpa'
   - pwsh: nuke XamariniOS --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
