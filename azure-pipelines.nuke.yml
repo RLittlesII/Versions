@@ -32,6 +32,11 @@ steps:
     displayName: 'SetupKeychain'
   - pwsh: nuke Fastlane --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'Fastlane'
+    env:
+      MATCH_PASSWORD: $(MATCH_PASSWORD)
+      MATCH_S3_ACCESS_KEY: $(MATCH_S3_ACCESS_KEY)
+      MATCH_S3_REGION: $(MATCH_S3_REGION)
+      MATCH_S3_SECRET_ACCESS_KEY: $(MATCH_S3_SECRET_ACCESS_KEY)
   - pwsh: nuke ArchiveIpa --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'ArchiveIpa'
   - pwsh: nuke AzurePipelines --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'

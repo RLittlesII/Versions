@@ -27,10 +27,10 @@ partial class Versions
 {
     Target AzurePipelines => _ => _
         .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
-        .DependsOn(SetupKeychain)
         .DependsOn(Clean)
         .DependsOn(Restore)
         .DependsOn(ModifyInfoPlist)
+        .DependsOn(SetupKeychain)
         .DependsOn(Fastlane)
         .DependsOn(ArchiveIpa);
 
