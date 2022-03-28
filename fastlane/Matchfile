@@ -5,6 +5,8 @@ s3_region(ENV['MATCH_S3_REGION'])
 s3_access_key(ENV['MATCH_S3_ACCESS_KEY'])
 s3_secret_access_key(ENV['MATCH_S3_SECRET_ACCESS_KEY'])
 
+keychain_name("temporary")
+keychain_password("doesntmatteritwillbetemporaryanyway")
 type("development", "adhoc") # The default type, can be: appstore, adhoc, enterprise or development
 
 app_identifier(["com.company.versions.dev", "com.company.versions"])

@@ -17,6 +17,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".fastlane", ".fastlane", "{49C760DA-C560-4BEC-B4E9-CD4F44AB3359}"
 	ProjectSection(SolutionItems) = preProject
 		fastlane\Matchfile = fastlane\Matchfile
+		fastlane\Appfile = fastlane\Appfile
+		fastlane\Fastfile = fastlane\Fastfile
 	EndProjectSection
 EndProject
 Global
