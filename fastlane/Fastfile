@@ -18,13 +18,18 @@ default_platform(:ios)
 platform :ios do 
   desc "Download the certificates and profiles for the CI"
   lane :ci do |options|    
-    match(type: "adhoc", 
-          readonly: true,
-          force_for_new_devices: true,
+    match(type: "adhoc",
+          team_id: "A874DYSH5P",
+          app_identifier: "['com.company.versions','com.company.versions.dev']",
+          storage_mode: "s3",
+          s3_bucket: "versions.provision",
           s3_region:ENV['MATCH_S3_REGION'],
           s3_access_key:ENV['MATCH_S3_ACCESS_KEY'],
           s3_secret_access_key:ENV['MATCH_S3_SECRET_ACCESS_KEY'],
+          output_path: "./provision/ios",
           keychain_name: "temporary.keychain", 
-          keychain_password: "doesntmatteritwillbetemporaryanyway")
+          keychain_password: "doesntmatteritwillbetemporaryanyway",
+          force_for_new_devices: true,
+          readonly: true)
   end
 end
