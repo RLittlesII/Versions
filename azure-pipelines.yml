@@ -19,6 +19,7 @@ stages:
               packageType: sdk
               version: 6.0.x
           - task: FileTransform@1
+            displayName: 'Populate App Settings'
             inputs:
               folderPath: '$(System.DefaultWorkingDirectory)'
               fileType: 'json'
