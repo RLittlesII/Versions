@@ -1,16 +1,17 @@
-storage_mode("git")
-git_url("https://dev.azure.com/rlittlesii/github/_git/fastlane")
-git_branch("main")
-storage_mode("git")
+storage_mode("s3")
+team_id("A874DYSH5P")
+s3_bucket("versions.provision")
+s3_region(ENV['MATCH_S3_REGION'])
+s3_access_key(ENV['MATCH_S3_ACCESS_KEY'])
+s3_secret_access_key(ENV['MATCH_S3_SECRET_ACCESS_KEY'])
 
-type("development", "adhoc", "appstore") # The default type, can be: appstore, adhoc, enterprise or development
+type("development", "adhoc") # The default type, can be: appstore, adhoc, enterprise or development
 
-app_identifier(["com.company.versions.dev", "com.company.versions.test", "com.company.versions"])
+app_identifier(["com.company.versions.dev", "com.company.versions"])
 username("rodney.littles@gmail.com") # Your Apple Developer Portal username
 output_path("./provision/ios")
 
 force_for_new_devices(true)
-
 readonly(true)
 # For all available options run `fastlane match --help`
 # Remove the # in the beginning of the line to enable the other options

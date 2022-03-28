@@ -42,9 +42,9 @@ partial class Versions : NukeBuild,
 
     public TargetPlatform iOSTargetPlatform { get; } = TargetPlatform.iPhone;
 
-    [Parameter("Configuration to build")] public Configuration Configuration { get; } = Configuration.AdHoc;
+    [Parameter("Configuration to build")] public Configuration Configuration { get; } = Configuration.Release;
 
-    [Parameter] public string IdentifierSuffix { get; } = "test";
+    [Parameter] public string IdentifierSuffix { get; } = "dev";
 
     [OptionalGitRepository] public GitRepository? GitRepository { get; }
 
@@ -79,6 +79,7 @@ partial class Versions : NukeBuild,
     public Target Build => _ => _
         .DependsOn(Restore)
         .DependsOn(ModifyInfoPlist)
+        .DependsOn(FastlaneMatch)
         .Executes(() =>
             MSBuild(settings =>
                 settings
@@ -92,6 +93,7 @@ partial class Versions : NukeBuild,
                     .SetPackageVersion(GitVersion?.NuGetVersionV2)));
 
     public Target ModifyInfoPlist => _ => _
+        .DependsOn(Restore)
         .Executes(
             () =>
             {
@@ -129,7 +131,9 @@ partial class Versions : NukeBuild,
     ///     packages a binary for distribution.
     /// </summary>
     public Target ArchiveIpa => _ => _
+        .DependsOn(Restore)
         .DependsOn(ModifyInfoPlist)
+        .DependsOn(FastlaneMatch)
         .OnlyWhenStatic(() => EnvironmentInfo.Platform == PlatformFamily.OSX)
         .Executes(
             () =>

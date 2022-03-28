@@ -10,15 +10,17 @@ internal partial class Versions
 
     Target InstallFastlane => _ => _
         .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
-        .Executes(() => ProcessTasks.StartProcess("sudo", "gem install fastlane"));
-
-    Target FastlaneMatch => _ => _
-        .After(ModifyInfoPlist)
-        .DependsOn(InstallFastlane)
-        .DependentFor(ArchiveIpa)
         .Executes(() =>
         {
-            var env = IsLocalBuild ? "development" : "adhoc";
-            return ProcessTasks.StartProcess("fastlane", $"match adhoc", logInvocation: true, logOutput: true);
+            using var process = ProcessTasks.StartProcess("brew", "install fastlane");
+            return process.WaitForExit();
+        });
+
+    Target FastlaneMatch => _ => _
+        .DependsOn(ModifyInfoPlist)
+        .Executes(() =>
+        {
+            using var process = ProcessTasks.StartProcess("fastlane", "match development --verbose", logInvocation: true, logOutput: true);
+            return process.WaitForExit();
         });
 }

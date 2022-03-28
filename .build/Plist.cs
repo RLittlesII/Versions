@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using Nuke.Common.IO;
 using Serilog;
@@ -38,8 +37,8 @@ internal static class Plist
     /// <summary>
     ///     Serializes the .plist file provided.
     /// </summary>
-    /// <param name="item">The plist object</param>
-    /// <returns>The xml document</returns>
+    /// <param name="item">The plist object.</param>
+    /// <returns>The xml document.</returns>
     private static XDocument SerializeDocument(object item)
     {
         var doc = new XDocument(new XDeclaration("1.0", "UTF-8", "yes"));
@@ -87,12 +86,10 @@ internal static class Plist
                 return new XElement("false");
             case DateTime time:
                 Log.Verbose("DateTime: {DateTime}", item);
-                return new XElement("date",
-                    time.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", DateTimeFormatInfo.InvariantInfo));
+                return new XElement("date", time.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", DateTimeFormatInfo.InvariantInfo));
             case DateTimeOffset offset:
                 Log.Verbose("DateTimeOffset: {DateTimeOffset}", item);
-                return new XElement("date",
-                    offset.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", DateTimeFormatInfo.InvariantInfo));
+                return new XElement("date", offset.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ", DateTimeFormatInfo.InvariantInfo));
             case byte[] bytes:
                 Log.Verbose("DateTimeOffset: {DateTimeOffset}", item);
                 return new XElement("data", Convert.ToBase64String(bytes));
