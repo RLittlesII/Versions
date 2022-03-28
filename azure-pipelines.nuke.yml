@@ -17,27 +17,26 @@
 #
 parameters:
   Configuration: 'Release'
-  BucketRegion: ''
   Verbosity: 'Normal'
 steps:
-  - pwsh: nuke BuildVersion --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
+  - pwsh: nuke BuildVersion --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'BuildVersion'
-  - pwsh: nuke Clean --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
+  - pwsh: nuke Clean --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'Clean'
-  - pwsh: nuke Restore --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
+  - pwsh: nuke Restore --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: '📪 Restore'
-  - pwsh: nuke ModifyInfoPlist --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
+  - pwsh: nuke ModifyInfoPlist --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'ModifyInfoPlist'
-  - pwsh: nuke SetupKeychain --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
+  - pwsh: nuke SetupKeychain --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'SetupKeychain'
-  - pwsh: nuke Fastlane --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
+  - pwsh: nuke Fastlane --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'Fastlane'
     env:
       MATCH_PASSWORD: $(MATCH_PASSWORD)
       MATCH_S3_ACCESS_KEY: $(MATCH_S3_ACCESS_KEY)
       MATCH_S3_REGION: $(MATCH_S3_REGION)
       MATCH_S3_SECRET_ACCESS_KEY: $(MATCH_S3_SECRET_ACCESS_KEY)
-  - pwsh: nuke ArchiveIpa --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
+  - pwsh: nuke ArchiveIpa --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'ArchiveIpa'
-  - pwsh: nuke AzurePipelines --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
+  - pwsh: nuke AzurePipelines --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'AzurePipelines'

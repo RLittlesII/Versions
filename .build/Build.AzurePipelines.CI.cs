@@ -5,14 +5,6 @@ using Rocket.Surgery.Nuke.Azp;
 [AzurePipelinesSecretStepsAttribute(
     InvokeTargets = new[] { nameof(AzurePipelines) },
     Parameters = new[] { nameof(IHaveConfiguration.Configuration), nameof(Verbosity) },
-        nameof(AzurePipelines),
-    },
-    Parameters = new[]
-    {
-        nameof(IHaveConfiguration.Configuration),
-        nameof(Verbosity),
-        nameof(BucketRegion),
-    },
     Secrets = new[] { nameof(BucketAccessKey), nameof(BucketSecretAccessKey) },
     AutoGenerate = false)]
 partial class Versions
