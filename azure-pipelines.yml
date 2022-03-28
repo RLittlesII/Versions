@@ -30,6 +30,14 @@ stages:
               custom: 'tool'
               arguments: 'install --global nuke.globaltool'
           - template: ./azure-pipelines.nuke.yml
+          - task: CopyFiles@2
+            inputs:
+              SourceFolder: 'artifacts/ios/'
+              Contents: '**'
+              TargetFolder: '$(build.artifactstagingdirectory)'
+              CleanTargetFolder: true
+              OverWrite: true
+              preserveTimestamp: true
           - task: PublishBuildArtifacts@1
             inputs:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)'
