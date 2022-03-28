@@ -3,6 +3,7 @@ using System.Collections.Generic;
 public class AzurePipelinesSecretStepsAttribute : AzurePipelinesStepsAttribute
 {
     public string[] Secrets { get; set; } = new string[0];
+
     public bool EnableAccessToken { get; set; }
 
     protected virtual IEnumerable<(string Key, string Value)> GetImports()

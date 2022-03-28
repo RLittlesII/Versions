@@ -3,8 +3,8 @@ using Nuke.Common.Tooling;
 using Rocket.Surgery.Nuke.Azp;
 
 [AzurePipelinesSecretStepsAttribute(
-    InvokeTargets = new[]
-    {
+    InvokeTargets = new[] { nameof(AzurePipelines) },
+    Parameters = new[] { nameof(IHaveConfiguration.Configuration), nameof(Verbosity) },
         nameof(AzurePipelines),
     },
     Parameters = new[]
@@ -32,6 +32,7 @@ partial class Versions
         {
             using var createKeychain = ProcessTasks.StartProcess("security", "create-keychain -p temporary.keychain doesntmatteritwillbetemporaryanyway", logInvocation: true, logOutput: true);
             using var unlockKeychain = ProcessTasks.StartProcess("security", "unlock-keychain -p temporary.keychain doesntmatteritwillbetemporaryanyway").AssertZeroExitCode();
+            using var findKeychain = ProcessTasks.StartProcess("security", "find-identity -v -p codesigning temporary.keychain").AssertZeroExitCode();
             return createKeychain.WaitForExit();
         });
 }
