@@ -24,7 +24,7 @@ platform :ios do
           s3_region:ENV['MATCH_S3_REGION'],
           s3_access_key:ENV['MATCH_S3_ACCESS_KEY'],
           s3_secret_access_key:ENV['MATCH_S3_SECRET_ACCESS_KEY'],
-          keychain_name: "temporary", 
+          keychain_name: "temporary.keychain", 
           keychain_password: "doesntmatteritwillbetemporaryanyway")
   end
 end
