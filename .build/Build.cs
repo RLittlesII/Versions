@@ -40,7 +40,7 @@ partial class Versions : NukeBuild,
 
     public TargetPlatform iOSTargetPlatform { get; } = TargetPlatform.iPhone;
 
-    [Parameter("Configuration to build")] public Configuration Configuration { get; } = Configuration.Debug;
+    [Parameter("Configuration to build")] public Configuration Configuration { get; } = Configuration.Release;
 
     [Parameter] public string IdentifierSuffix { get; } = string.Empty;
 
