@@ -22,9 +22,9 @@ partial class Versions
         .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
         .Executes(() =>
         {
-            using var createKeychain = ProcessTasks.StartProcess("security", "create-keychain -p temporary.keychain doesntmatteritwillbetemporaryanyway", logInvocation: true, logOutput: true).AssertZeroExitCode();
-            using var unlockKeychain = ProcessTasks.StartProcess("security", "unlock-keychain -p temporary.keychain doesntmatteritwillbetemporaryanyway").AssertZeroExitCode();
-            using var findKeychain = ProcessTasks.StartProcess("security", "find-identity -v -p codesigning temporary.keychain").AssertZeroExitCode();
-            return new[] { createKeychain.WaitForExit(), unlockKeychain.WaitForExit(), findKeychain.WaitForExit() };
+            var createKeychain = ProcessTasks.StartProcess("security", "create-keychain -p temporary.keychain doesntmatteritwillbetemporaryanyway", logInvocation: true, logOutput: true).WaitForExit();
+            var unlockKeychain = ProcessTasks.StartProcess("security", "unlock-keychain -p temporary.keychain doesntmatteritwillbetemporaryanyway", logInvocation: true, logOutput: true).WaitForExit();
+            var findKeychain = ProcessTasks.StartProcess("security", "find-identity -v -p codesigning temporary.keychain", logInvocation: true, logOutput: true).WaitForExit();
+            return new[] { createKeychain, unlockKeychain, findKeychain};
         });
 }
