@@ -3,7 +3,7 @@ using Nuke.Common.Tooling;
 
 internal partial class Versions
 {
-    Target Fastlane => _ => _
+    private Target Fastlane => _ => _
         .DependsOn(SetupKeychain)
         .Executes(() =>
         {

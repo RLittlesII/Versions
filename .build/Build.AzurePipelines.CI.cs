@@ -2,14 +2,6 @@ using Nuke.Common;
 using Nuke.Common.Tooling;
 using Rocket.Surgery.Nuke.Azp;
 
-// [AzurePipelines.AzurePipelines(AzurePipelinesImage.MacOsLatest,
-//     TriggerBranchesInclude = new[] { "main" },
-//     InvokedTargets = new[] { nameof(Default) },
-//     CacheKeyFiles = new string[] {},
-//     CachePaths = new string[] {},
-//     AppleSigningCertificate = "versions.p12",
-//     AppleProvisioningProfile = "",
-//     AutoGenerate = true)]
 [AzurePipelinesSecretStepsAttribute(
     InvokeTargets = new[]
     {

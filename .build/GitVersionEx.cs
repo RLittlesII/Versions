@@ -1,5 +1,8 @@
 using Nuke.Common.Tools.GitVersion;
 
+/// <summary>
+/// Extension functions for <see cref="GitVersion"/>.
+/// </summary>
 public static class GitVersionEx
 {
     /// <summary>

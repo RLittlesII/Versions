@@ -127,7 +127,7 @@ internal static class Plist
         }
     }
 
-    private static dynamic DeserializeXml(XElement element)
+    static dynamic DeserializeXml(XElement element)
     {
         switch (element.Name.LocalName)
         {
