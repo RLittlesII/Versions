@@ -1,12 +1,14 @@
 using Nuke.Common;
-using Nuke.Common.IO;
 using Nuke.Common.Tooling;
-using Rocket.Surgery.Nuke.Azp;
 
 internal partial class Versions
 {
     Target Fastlane => _ => _
-        .DependsOn(FastlaneMatch);
+        .DependsOn(SetupKeychain)
+        .Executes(() =>
+        {
+            using var process = ProcessTasks.StartProcess("fastlane", "ci --verbose", logInvocation: true, logOutput: true).AssertZeroExitCode();
+        });
 
     Target FastlaneMatch => _ => _
         .DependsOn(ModifyInfoPlist)

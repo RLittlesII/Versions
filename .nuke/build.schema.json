@@ -111,6 +111,7 @@
               "Pack",
               "PackiPhone",
               "Restore",
+              "SetupKeychain",
               "Test",
               "XamariniOS"
             ]
@@ -139,6 +140,7 @@
               "Pack",
               "PackiPhone",
               "Restore",
+              "SetupKeychain",
               "Test",
               "XamariniOS"
             ]

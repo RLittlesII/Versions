@@ -2,8 +2,6 @@ using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;
-using Nuke.Common.ProjectModel;
-using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MSBuild;
@@ -132,7 +130,6 @@ partial class Versions : NukeBuild,
     public Target ArchiveIpa => _ => _
         .DependsOn(Restore)
         .DependsOn(ModifyInfoPlist)
-        .DependsOn(FastlaneMatch)
         .OnlyWhenStatic(() => EnvironmentInfo.Platform == PlatformFamily.OSX)
         .Executes(
             () =>
@@ -154,6 +151,7 @@ partial class Versions : NukeBuild,
         .DependsOn(Clean)
         .DependsOn(Restore)
         .DependsOn(ModifyInfoPlist)
+        .DependsOn(FastlaneMatch)
         .DependsOn(ArchiveIpa);
 
     public Target Default => _ => _

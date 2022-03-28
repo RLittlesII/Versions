@@ -1,5 +1,5 @@
 using Nuke.Common;
-using Nuke.Common.CI.AzurePipelines;
+using Nuke.Common.Tooling;
 using Rocket.Surgery.Nuke.Azp;
 
 // [AzurePipelines.AzurePipelines(AzurePipelinesImage.MacOsLatest,
@@ -27,5 +27,19 @@ partial class Versions
 {
     Target AzurePipelines => _ => _
         .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
-        .DependsOn(XamariniOS);
+        .DependsOn(SetupKeychain)
+        .DependsOn(Clean)
+        .DependsOn(Restore)
+        .DependsOn(ModifyInfoPlist)
+        .DependsOn(Fastlane)
+        .DependsOn(ArchiveIpa);
+
+    Target SetupKeychain => _ => _
+        .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
+        .Executes(() =>
+        {
+            using var createKeychain = ProcessTasks.StartProcess("security", "create-keychain -p temporary.keychain doesntmatteritwillbetemporaryanyway", logInvocation: true, logOutput: true);
+            using var unlockKeychain = ProcessTasks.StartProcess("security", "unlock-keychain -p temporary.keychain doesntmatteritwillbetemporaryanyway").AssertZeroExitCode();
+            return createKeychain.WaitForExit();
+        });
 }

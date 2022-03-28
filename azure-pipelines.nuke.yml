@@ -28,16 +28,11 @@ steps:
     displayName: '📪 Restore'
   - pwsh: nuke ModifyInfoPlist --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'ModifyInfoPlist'
-  - pwsh: nuke FastlaneMatch --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
-    displayName: 'FastlaneMatch'
-    env:
-      MATCH_PASSWORD: $(MATCH_PASSWORD)
-      MATCH_S3_ACCESS_KEY: $(MATCH_S3_ACCESS_KEY)
-      MATCH_S3_REGION: $(MATCH_S3_REGION)
-      MATCH_S3_SECRET_ACCESS_KEY: $(MATCH_S3_SECRET_ACCESS_KEY)
+  - pwsh: nuke SetupKeychain --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
+    displayName: 'SetupKeychain'
+  - pwsh: nuke Fastlane --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
+    displayName: 'Fastlane'
   - pwsh: nuke ArchiveIpa --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'ArchiveIpa'
-  - pwsh: nuke XamariniOS --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
-    displayName: 'XamariniOS'
   - pwsh: nuke AzurePipelines --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'AzurePipelines'
