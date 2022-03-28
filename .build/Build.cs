@@ -36,13 +36,13 @@ partial class Versions : NukeBuild,
 
     public AbsolutePath InfoPlist { get; } = RootDirectory / "src" / "Versions.iOS" / "info.plist";
 
-    public string BaseBundleIdentifier { get; } = "com.companyname.versions";
+    public string BaseBundleIdentifier { get; } = "com.company.versions";
 
     public TargetPlatform iOSTargetPlatform { get; } = TargetPlatform.iPhone;
 
-    [Parameter("Configuration to build")] public Configuration Configuration { get; } = Configuration.Release;
+    [Parameter("Configuration to build")] public Configuration Configuration { get; } = Configuration.Debug;
 
-    [Parameter] public string IdentifierSuffix { get; } = "dev";
+    [Parameter] public string IdentifierSuffix { get; } = string.Empty;
 
     [Parameter] public bool EnableRestore { get; } = AzurePipelinesTasks.IsRunningOnAzurePipelines.Compile().Invoke();
 
