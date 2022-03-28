@@ -32,37 +32,8 @@ internal partial class Versions : NukeBuild,
     ICanArchiveiOS,
     IHaveConfiguration<Configuration>
 {
-    /// <summary>
-    /// Support plugins are available for:
-    ///   - JetBrains ReSharper        https://nuke.build/resharper
-    ///   - JetBrains Rider            https://nuke.build/rider
-    ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
-    ///   - Microsoft VSCode           https://nuke.build/vscode
-    /// </summary>
-    /// <returns>The exit code.</returns>
-    public static int Main() => Execute<Versions>(x => x.Default);
-
-    /// <summary>
-    /// Gets the build version target.
-    /// </summary>
-    public Target BuildVersion => _ => _
-        .Before(Clean)
-        .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
-        .Executes(
-            () =>
-            {
-                Log.Information(
-                    "Building version {FullSemVer} of {SolutionName} ({@Configuration}) using version {NukeVersion} of Nuke",
-                    GitVersion.FullSemanticVersion(),
-                    ((IHaveSolution) this).Solution.Name,
-                    Configuration,
-                    typeof(NukeBuild).Assembly.GetVersionText()
-                );
-            });
-
     /// <inheritdoc cref="ICanClean.Clean" />
     public Target Clean => _ => _
-        .DependsOn(BuildVersion)
         .Inherit<ICanClean>(x => x.Clean);
 
     /// <inheritdoc cref="ICanRestoreXamarin.Restore" />
@@ -86,7 +57,7 @@ internal partial class Versions : NukeBuild,
                     .SetDefaultLoggers(((IHaveOutputLogs) this).LogsDirectory / "build.log")
                     .SetGitVersionEnvironment(GitVersion)
                     .SetAssemblyVersion(GitVersion.FullSemanticVersion())
-                    .SetPackageVersion(GitVersion?.NuGetVersionV2)));
+                    .SetPackageVersion(GitVersion.NuGetVersionV2)));
 
     /// <inheritdoc/>
     public Target ModifyInfoPlist => _ => _
@@ -157,4 +128,14 @@ internal partial class Versions : NukeBuild,
     /// </summary>
     public Target Default => _ => _
         .DependsOn(XamariniOS);
+
+    /// <summary>
+    /// Support plugins are available for:
+    ///   - JetBrains ReSharper        https://nuke.build/resharper
+    ///   - JetBrains Rider            https://nuke.build/rider
+    ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
+    ///   - Microsoft VSCode           https://nuke.build/vscode
+    /// </summary>
+    /// <returns>The exit code.</returns>
+    public static int Main() => Execute<Versions>(x => x.Default);
 }
