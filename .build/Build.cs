@@ -7,12 +7,14 @@ using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MSBuild;
 using Nuke.Common.Utilities;
-using Rocket.Surgery.Nuke;
 using Rocket.Surgery.Nuke.Azp;
 using Rocket.Surgery.Nuke.Xamarin;
 using Serilog;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 
+/// <summary>
+/// Defines <see cref="Nuke"/> targets for the build.
+/// </summary>
 [CheckBuildProjectConfigurations]
 [UnsetVisualStudioEnvironmentVariables]
 [DotNetVerbosityMapping]
@@ -21,7 +23,7 @@ using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1134:Attributes should not share line", Justification = "This is how I Nuke!")]
 [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1009:Closing parenthesis should be spaced correctly", Justification = "This is how I Nuke!")]
 [SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1003:Symbols should be spaced correctly", Justification = "This is how I Nuke!")]
-partial class Versions : NukeBuild,
+internal partial class Versions : NukeBuild,
     ICanClean,
     ICanRestoreXamarin,
     ICanBuildXamariniOS,
@@ -30,32 +32,6 @@ partial class Versions : NukeBuild,
     ICanArchiveiOS,
     IHaveConfiguration<Configuration>
 {
-    [Parameter] string BucketRegion { get; set; }
-
-    [Parameter] [Secret] readonly string BucketAccessKey;
-    [Parameter] [Secret] readonly string BucketSecretAccessKey;
-
-    /// <inheritdoc/>
-    public AbsolutePath InfoPlist { get; } = RootDirectory / "src" / "Versions.iOS" / "info.plist";
-
-    /// <inheritdoc/>
-    public string BaseBundleIdentifier { get; } = "com.company.versions";
-
-    /// <inheritdoc/>
-    public TargetPlatform iOSTargetPlatform { get; } = TargetPlatform.iPhone;
-
-    [Parameter("Configuration to build")] public Configuration Configuration { get; } = Configuration.Release;
-
-    [Parameter] public string IdentifierSuffix { get; } = string.Empty;
-
-    /// <inheritdoc/>
-    [Parameter] public bool EnableRestore { get; } = AzurePipelinesTasks.IsRunningOnAzurePipelines.Compile().Invoke();
-
-    [OptionalGitRepository] public GitRepository? GitRepository { get; }
-
-    /// <inheritdoc/>
-    [ComputedGitVersion] public GitVersion GitVersion { get; } = null!;
-
     /// <summary>
     /// Support plugins are available for:
     ///   - JetBrains ReSharper        https://nuke.build/resharper
@@ -66,6 +42,9 @@ partial class Versions : NukeBuild,
     /// <returns>The exit code.</returns>
     public static int Main() => Execute<Versions>(x => x.Default);
 
+    /// <summary>
+    /// Gets the build version target.
+    /// </summary>
     public Target BuildVersion => _ => _
         .Before(Clean)
         .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
@@ -160,7 +139,8 @@ partial class Versions : NukeBuild,
                             .SetDefaultLoggers(((IHaveOutputLogs) this).LogsDirectory / "package.log")
                             .SetGitVersionEnvironment(GitVersion)
                             .SetAssemblyVersion(GitVersion.FullSemanticVersion())
-                            .SetPackageVersion(GitVersion.FullSemanticVersion())));
+                            .SetPackageVersion(GitVersion.FullSemanticVersion())))
+        .Produces(((IHaveArtifacts)this).ArtifactsDirectory / "ios");
 
     /// <summary>
     /// Gets build the Xamarin iOS target.
