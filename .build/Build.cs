@@ -46,11 +46,16 @@ partial class Versions : NukeBuild,
 
     [Parameter] public string IdentifierSuffix { get; } = "dev";
 
+    [Parameter] public bool EnableRestore { get; } = AzurePipelinesTasks.IsRunningOnAzurePipelines.Compile().Invoke();
+
     [OptionalGitRepository] public GitRepository? GitRepository { get; }
 
     [ComputedGitVersion] public GitVersion GitVersion { get; } = null!;
 
-    [Parameter] public bool EnableRestore { get; } = AzurePipelinesTasks.IsRunningOnAzurePipelines.Compile().Invoke();
+    [Parameter] string BucketRegion { get; set; }
+
+    [Parameter] [Secret] readonly string BucketAccessKey;
+    [Parameter] [Secret] readonly string BucketSecretAccessKey;
 
     public Target BuildVersion => _ => _
         .Before(Clean)
@@ -121,12 +126,6 @@ partial class Versions : NukeBuild,
 
     public Target Test => _ => _;
 
-    public Target InstallCertificate => _ => _
-        .Executes(() =>
-        {
-            ProcessTasks.StartProcess("openssl", "--preview Mono");
-        });
-
     /// <summary>
     ///     packages a binary for distribution.
     /// </summary>
@@ -144,9 +143,9 @@ partial class Versions : NukeBuild,
                             .SetProperty("Platform", iOSTargetPlatform)
                             .SetProperty("BuildIpa", "true")
                             .SetProperty("ArchiveOnBuild", "true")
-                            .SetProperty("IpaPackageDir", ((IHaveArtifacts)this).ArtifactsDirectory / "ios")
+                            .SetProperty("IpaPackageDir", ((IHaveArtifacts) this).ArtifactsDirectory / "ios")
                             .SetConfiguration(Configuration)
-                            .SetDefaultLoggers(((IHaveOutputLogs)this).LogsDirectory / "package.log")
+                            .SetDefaultLoggers(((IHaveOutputLogs) this).LogsDirectory / "package.log")
                             .SetGitVersionEnvironment(GitVersion)
                             .SetAssemblyVersion(GitVersion.FullSemanticVersion())
                             .SetPackageVersion(GitVersion.FullSemanticVersion())));

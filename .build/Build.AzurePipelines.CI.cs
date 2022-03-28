@@ -10,7 +10,7 @@ using Rocket.Surgery.Nuke.Azp;
 //     AppleSigningCertificate = "versions.p12",
 //     AppleProvisioningProfile = "",
 //     AutoGenerate = true)]
-[AzurePipelinesStepsAttribute(
+[AzurePipelinesSecretStepsAttribute(
     InvokeTargets = new[]
     {
         nameof(AzurePipelines),
@@ -19,22 +19,13 @@ using Rocket.Surgery.Nuke.Azp;
     {
         nameof(IHaveConfiguration.Configuration),
         nameof(Verbosity),
+        nameof(BucketRegion),
     },
+    Secrets = new[] { nameof(BucketAccessKey), nameof(BucketSecretAccessKey) },
     AutoGenerate = false)]
 partial class Versions
 {
     Target AzurePipelines => _ => _
         .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
-        .DependsOn(Fastlane)
-        .DependsOn(Default);
-}
-
-interface IHaveAppleCertificate
-{
-    public string SigningCertificate { get; }
-}
-
-interface IHaveAppleProvisioningProfile
-{
-    public string ProvisioningProfile { get; }
+        .DependsOn(XamariniOS);
 }

@@ -5,7 +5,7 @@
 #
 #     - To turn off auto-generation set:
 #
-#         [AzurePipelinesSteps (AutoGenerate = false)]
+#         [AzurePipelinesSecretSteps (AutoGenerate = false)]
 #
 #     - To trigger manual generation invoke:
 #
@@ -17,27 +17,22 @@
 #
 parameters:
   Configuration: 'Release'
+  BucketRegion: ''
   Verbosity: 'Normal'
 steps:
-  - pwsh: nuke BuildVersion --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
+  - pwsh: nuke BuildVersion --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'BuildVersion'
-  - pwsh: nuke Clean --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
+  - pwsh: nuke Clean --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'Clean'
-  - pwsh: nuke Restore --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
+  - pwsh: nuke Restore --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: '📪 Restore'
-  - pwsh: nuke InstallFastlane --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
-    displayName: 'InstallFastlane'
-  - pwsh: nuke ModifyInfoPlist --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
+  - pwsh: nuke ModifyInfoPlist --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'ModifyInfoPlist'
-  - pwsh: nuke FastlaneMatch --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
+  - pwsh: nuke FastlaneMatch --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'FastlaneMatch'
-  - pwsh: nuke Fastlane --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
-    displayName: 'Fastlane'
-  - pwsh: nuke ArchiveIpa --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
+  - pwsh: nuke ArchiveIpa --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'ArchiveIpa'
-  - pwsh: nuke XamariniOS --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
+  - pwsh: nuke XamariniOS --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'XamariniOS'
-  - pwsh: nuke Default --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
-    displayName: 'Default'
-  - pwsh: nuke AzurePipelines --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
+  - pwsh: nuke AzurePipelines --skip --configuration '${{ parameters.Configuration }}' --bucketregion '${{ parameters.BucketRegion }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'AzurePipelines'

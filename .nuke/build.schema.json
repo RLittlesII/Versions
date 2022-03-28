@@ -10,6 +10,17 @@
           "type": "string",
           "description": "The directory where artifacts are to be dropped"
         },
+        "BucketAccessKey": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secret [profile]'"
+        },
+        "BucketRegion": {
+          "type": "string"
+        },
+        "BucketSecretAccessKey": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secret [profile]'"
+        },
         "Configuration": {
           "type": "string",
           "description": "Configuration to build",
@@ -96,8 +107,6 @@
               "Default",
               "Fastlane",
               "FastlaneMatch",
-              "InstallCertificate",
-              "InstallFastlane",
               "ModifyInfoPlist",
               "Pack",
               "PackiPhone",
@@ -126,8 +135,6 @@
               "Default",
               "Fastlane",
               "FastlaneMatch",
-              "InstallCertificate",
-              "InstallFastlane",
               "ModifyInfoPlist",
               "Pack",
               "PackiPhone",
