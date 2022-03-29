@@ -45,8 +45,8 @@ stages:
               SourceFolder: './.build'
               Contents: '*.sh'
               TargetFolder: '$(build.artifactstagingdirectory)'
-              CleanTargetFolder: true
-              OverWrite: true
+              CleanTargetFolder: false
+              OverWrite: false
               preserveTimestamp: true
 
           - task: PublishBuildArtifacts@1
