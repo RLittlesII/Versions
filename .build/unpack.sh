@@ -7,11 +7,13 @@ ipa="$1.ipa"
 echo $ipa
 zip="$1.zip"
 echo $zip
+appName="$1.app"
 cp ../artifacts/ios/"$ipa" ../artifacts/ios/"$zip"
 
 unzip -d ../artifacts/ios/"$1" ../artifacts/ios/"$zip"
 
-echo ../artifacts/ios/Payload/$1.app
+echo ../artifacts/ios/Payload/"$appName"
 
-/usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier $2" ../artifacts/ios/$1/Payload/$1.app/info.plist
-/usr/libexec/PlistBuddy -c "Save"
+/usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier $2" ../artifacts/ios/"$1"/Payload/"$appName"/info.plist
+
+rm -rf ../artifacts/ios/"$1"/Payload/"$appName"/_CodeSignature
