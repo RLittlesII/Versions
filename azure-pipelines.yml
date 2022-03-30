@@ -44,7 +44,7 @@ stages:
             inputs:
               SourceFolder: './fastlane'
               Contents: '**'
-              TargetFolder: 'fastlane/$(build.artifactstagingdirectory)'
+              TargetFolder: '$(build.artifactstagingdirectory)/fastlane/'
               CleanTargetFolder: false
               OverWrite: false
               preserveTimestamp: true
