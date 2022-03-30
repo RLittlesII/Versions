@@ -40,6 +40,15 @@ stages:
               OverWrite: true
               preserveTimestamp: true
           - task: CopyFiles@2
+            displayName: 'Copy Fastlane'
+            inputs:
+              SourceFolder: './fastlane'
+              Contents: '**'
+              TargetFolder: '$(build.artifactstagingdirectory)'
+              CleanTargetFolder: false
+              OverWrite: false
+              preserveTimestamp: true
+          - task: CopyFiles@2
             displayName: 'Copy Release Scripts'
             inputs:
               SourceFolder: './.build'
@@ -48,7 +57,6 @@ stages:
               CleanTargetFolder: false
               OverWrite: false
               preserveTimestamp: true
-
           - task: PublishBuildArtifacts@1
             inputs:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)'
