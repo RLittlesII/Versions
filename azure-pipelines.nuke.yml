@@ -19,6 +19,8 @@ parameters:
   Configuration: 'Release'
   Verbosity: 'Normal'
 steps:
+  - pwsh: nuke PrintAzurePipelinesEnvironment --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
+    displayName: 'PrintAzurePipelinesEnvironment'
   - pwsh: nuke Clean --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'Clean'
   - pwsh: nuke Restore --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'

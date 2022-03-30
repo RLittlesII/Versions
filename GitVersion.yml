@@ -4,16 +4,18 @@ assembly-file-versioning-format: '{Major}.{Minor}.{Patch}.{env:BUILD_NUMBER ?? 1
 continuous-delivery-fallback-tag: alpha
 commit-message-incrementing: Enabled
 mode: Mainline
+tag-prefix: '[vV]'
 update-build-number: true
 branches:
   main:
     regex: ^master$|^main$
-    mode: Mainline
+    mode: ContinuousDelivery
     tag: ''
     increment: Patch
     prevent-increment-of-merged-branch-version: true
     track-merge-target: false
     tracks-release-branches: false
     is-release-branch: false
+    is-mainline: true
 ignore:
   sha: []
