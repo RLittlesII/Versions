@@ -1,15 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using Nuke.Common;
 using Nuke.Common.Execution;
-using Nuke.Common.Git;
-using Nuke.Common.IO;
 using Nuke.Common.Tools.DotNet;
-using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MSBuild;
-using Nuke.Common.Utilities;
 using Rocket.Surgery.Nuke.Azp;
 using Rocket.Surgery.Nuke.Xamarin;
-using Serilog;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 
 /// <summary>
@@ -75,8 +70,7 @@ internal partial class Versions : NukeBuild,
         .DependsOn(Restore)
         .DependsOn(ModifyInfoPlist)
         .OnlyWhenStatic(() => EnvironmentInfo.Platform == PlatformFamily.OSX)
-        .Inherit<ICanArchiveiOS>(x => x.ArchiveIpa)
-        .Produces(((IHaveArtifacts)this).ArtifactsDirectory / "ios");
+        .Inherit<ICanArchiveiOS>(x => x.ArchiveIpa);
 
     /// <summary>
     /// Gets build the Xamarin iOS target.
