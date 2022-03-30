@@ -68,8 +68,7 @@ internal partial class Versions
         .DependsOn(ModifyInfoPlist)
         .DependsOn(SetupKeychain)
         .DependsOn(Fastlane)
-        .DependsOn(ArchiveIpa)
-        .DependsOn(CopyIpa);
+        .DependsOn(ArchiveIpa);
 
     private Target SetupKeychain => _ => _
         .DependsOn(ModifyInfoPlist)
@@ -82,10 +81,4 @@ internal partial class Versions
             var findKeychain = ProcessTasks.StartProcess("security", "find-identity -v -p codesigning temporary.keychain", logInvocation: true, logOutput: true).AssertZeroExitCode().WaitForExit();
             return new[] { createKeychain, listKeychain, unlockKeychain, findKeychain };
         });
-
-    private Target CopyIpa => _ => _
-        .DependsOn(ArchiveIpa)
-        .Executes(() => FileSystemTasks.CopyFileToDirectory(
-            ((IHaveArtifacts) this).ArtifactsDirectory / "ios" / "Versions.iOS.ipa",
-            PipelinesArtifactDirectory));
 }

@@ -36,7 +36,5 @@ steps:
       MATCH_S3_SECRET_ACCESS_KEY: $(MATCH_S3_SECRET_ACCESS_KEY)
   - pwsh: nuke ArchiveIpa --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'ArchiveIpa'
-  - pwsh: nuke CopyIpa --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
-    displayName: 'CopyIpa'
   - pwsh: nuke AzurePipelines --skip --configuration '${{ parameters.Configuration }}' --verbosity '${{ parameters.Verbosity }}'
     displayName: 'AzurePipelines'
