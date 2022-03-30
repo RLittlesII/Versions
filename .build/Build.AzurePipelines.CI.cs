@@ -63,7 +63,6 @@ internal partial class Versions
     /// </summary>
     private Target AzurePipelines => _ => _
         .OnlyWhenStatic(AzurePipelinesTasks.IsRunningOnAzurePipelines)
-        .DependsOn(PrintAzurePipelinesEnvironment)
         .DependsOn(Clean)
         .DependsOn(Restore)
         .DependsOn(ModifyInfoPlist)
@@ -88,5 +87,5 @@ internal partial class Versions
         .DependsOn(ArchiveIpa)
         .Executes(() => FileSystemTasks.CopyFileToDirectory(
             ((IHaveArtifacts) this).ArtifactsDirectory / "ios" / "Versions.iOS.ipa",
-            "$(build.artifactstagingdirectory)"));
+            PipelinesArtifactDirectory));
 }
