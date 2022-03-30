@@ -1,6 +1,5 @@
-#!/bin/sh
-chmod a+x "unpack.sh"
+printenv
 ./unpack.sh Versions.iOS "$BundleIdentifier"
-#./fastlane.sh
+./fastlane.sh
 #./resign.sh Versions.iOS "$Provisioning"
 #./pack.sh
