@@ -8,12 +8,12 @@ echo $ipa
 zip="$1.zip"
 echo $zip
 appName="$1.app"
-cp ../artifacts/ios/"$ipa" ../artifacts/ios/"$zip"
+cp "$ipa" "$zip"
 
-unzip -d ../artifacts/ios/"$1" ../artifacts/ios/"$zip"
+unzip -d "$1" "$zip"
 
-echo ../artifacts/ios/Payload/"$appName"
+echo ./Payload/"$appName"
 
-/usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier $2" ../artifacts/ios/"$1"/Payload/"$appName"/info.plist
+/usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier $2" ./"$1"/Payload/"$appName"/info.plist
 
-rm -rf ../artifacts/ios/"$1"/Payload/"$appName"/_CodeSignature
+rm -rf ./"$1"/Payload/"$appName"/_CodeSignature
