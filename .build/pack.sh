@@ -1,0 +1,1 @@
+zip -qr signed.ipa Payload
