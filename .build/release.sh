@@ -1,4 +1,4 @@
-source "./unpack.sh" Versions.iOS $BundleIdentifier
-source "./fastlane.sh"
-source "./resign.sh" Versions.iOS $Provisioning
-source "./pack.sh"
+./unpack.sh Versions.iOS $BundleIdentifier
+./fastlane.sh
+./resign.sh Versions.iOS $Provisioning
+./pack.sh
